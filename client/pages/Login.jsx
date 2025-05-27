@@ -26,7 +26,6 @@ export default function Login({ user }) {
       </div>
     );
   }
-  console.log({ username, password });
 
   return (
     <AuthForm

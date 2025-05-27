@@ -20,7 +20,6 @@ export default function Dashboard({ user }) {
       .get("http://localhost:3001/api/highscores")
       .then((res) => setHighscores(res.data));
   };
-  console.log({ user });
   if (!user) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
