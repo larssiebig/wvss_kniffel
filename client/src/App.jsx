@@ -4,6 +4,7 @@ import axios from "axios";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
+import KniffelGame from "../pages/KniffelGame";
 import Home from "../pages/Home";
 import Navbar from "../components/Navbar"; // <-- adjust path if needed
 import { Outlet } from "react-router-dom";
@@ -39,6 +40,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard user={user} />} />
+          <Route path="/kniffel" element={<KniffelGame />} />
         </Route>
       </Routes>
     </Router>
