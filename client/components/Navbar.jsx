@@ -5,17 +5,13 @@ export default function Navbar({ user, setUser }) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://localhost:3001/api/logout",
-        {},
-        { withCredentials: true }
-      );
-      setUser(null);
-      navigate("/login");
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
+    await axios.post(
+      "http://localhost:3001/api/logout",
+      {},
+      { withCredentials: true }
+    );
+    setUser(null);
+    navigate("/login");
   };
 
   return (
@@ -25,8 +21,22 @@ export default function Navbar({ user, setUser }) {
           Kniffel App
         </Link>
       </h1>
+
       <div className="space-x-4">
-        {!user ? (
+        {user ? (
+          <>
+            <span className="text-gray-700">Hi, {user.username}</span>
+            <Link to="/dashboard" className="text-blue-600 hover:underline">
+              Dashboard
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-red-600 hover:underline"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
           <>
             <Link to="/login" className="text-blue-600 hover:underline">
               Login
@@ -34,21 +44,6 @@ export default function Navbar({ user, setUser }) {
             <Link to="/register" className="text-blue-600 hover:underline">
               Register
             </Link>
-          </>
-        ) : (
-          <>
-            <Link to="/dashboard" className="text-blue-600 hover:underline">
-              Dashboard
-            </Link>
-            <Link to="/kniffel" className="text-blue-600 hover:underline">
-              Game
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="text-red-500 hover:underline"
-            >
-              Logout
-            </button>
           </>
         )}
       </div>

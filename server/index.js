@@ -58,7 +58,7 @@ app.post("/api/login", async (req, res) => {
 // LOGOUT
 app.post("/api/logout", (req, res) => {
   req.session.destroy(() => {
-    res.clearCookie("connect.sid");
+    res.clearCookie("connect.sid"); // default cookie name used by express-session
     res.json({ success: true });
   });
 });
