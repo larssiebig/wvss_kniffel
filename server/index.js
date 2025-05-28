@@ -10,17 +10,25 @@ const prisma = new PrismaClient();
 const app = express();
 const PORT = 3001;
 
+// CORS setup to allow frontend access with credentials (cookies)
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(bodyParser.json());
+
+// Session config with cookie options
 app.use(
   session({
     secret: "supersecret",
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false, // set to true if using HTTPS in production
+      sameSite: "lax",
+    },
   })
 );
 
-// Auth routes (registrieren, login, logout)
+// REGISTER
 app.post("/api/register", async (req, res) => {
   const { username, password } = req.body;
   const hash = await bcrypt.hash(password, 10);
@@ -35,6 +43,7 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
+// LOGIN
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await prisma.user.findUnique({ where: { username } });
@@ -46,6 +55,15 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+// LOGOUT
+app.post("/api/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.clearCookie("connect.sid");
+    res.json({ success: true });
+  });
+});
+
+// GET CURRENT USER
 app.get("/api/user", async (req, res) => {
   if (!req.session.userId) return res.json(null);
   const user = await prisma.user.findUnique({
@@ -54,7 +72,7 @@ app.get("/api/user", async (req, res) => {
   res.json({ username: user.username });
 });
 
-// Highscore speichern
+// SAVE SCORE
 app.post("/api/score", async (req, res) => {
   if (!req.session.userId)
     return res.status(401).json({ error: "Not logged in" });
@@ -63,7 +81,7 @@ app.post("/api/score", async (req, res) => {
   res.json({ success: true });
 });
 
-// Top 10 Scores
+// GET TOP 10 SCORES
 app.get("/api/highscores", async (req, res) => {
   const scores = await prisma.score.findMany({
     orderBy: { value: "desc" },
