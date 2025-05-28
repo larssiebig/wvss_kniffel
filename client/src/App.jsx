@@ -14,10 +14,10 @@ import Home from "../pages/Home";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
 
-function Layout({ user }) {
+function Layout({ user, setUser }) {
   return (
     <div className="w-screen min-h-screen bg-gray-100 text-black">
-      <Navbar user={user} />
+      <Navbar user={user} setUser={setUser} />
       <div className="p-4">
         <Outlet />
       </div>
@@ -52,8 +52,7 @@ export default function App() {
           <Route path="/register" element={<Navigate to="/dashboard" />} />
         )}
 
-        <Route element={<Layout user={user} />}>
-          {/* Protected routes with Navbar */}
+        <Route element={<Layout user={user} setUser={setUser} />}>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard user={user} />} />
           <Route path="/kniffel" element={<KniffelGame user={user} />} />
