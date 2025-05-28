@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <nav className="w-full text-black bg-white shadow px-6 py-4 flex justify-between items-center">
       <h1 className="text-xl font-bold text-gray-800">
-        <Link to="/" className="hover:text-black-600">
+        <Link to="/kniffel" className="hover:text-black-600">
           Kniffel App
         </Link>
       </h1>

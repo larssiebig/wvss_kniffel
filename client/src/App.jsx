@@ -40,7 +40,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard user={user} />} />
-          <Route path="/kniffel" element={<KniffelGame />} />
+          <Route path="/kniffel" element={<KniffelGame user={user} />} />
         </Route>
       </Routes>
     </Router>

@@ -26,7 +26,7 @@ function rollAllDice(kept) {
     .map((_, i) => (kept[i] ? null : rollDie()));
 }
 
-export default function KniffelGame() {
+export default function KniffelGame({ user }) {
   const [dice, setDice] = useState(Array(5).fill(null));
   const [kept, setKept] = useState(Array(5).fill(false));
   const [rollsLeft, setRollsLeft] = useState(3);
