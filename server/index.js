@@ -106,6 +106,23 @@ app.get("/api/highscores", async (req, res) => {
   }
 });
 
+// DELETE USER (including scores)
+app.delete("/api/user/:id", async (req, res) => {
+  const userId = parseInt(req.params.id);
+  try {
+    await prisma.score.deleteMany({ // delete scores
+      where: { userId }
+    });
+    await prisma.user.delete({ // delete user
+      where: { id: userId } 
+    });
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+});
+
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
 );
