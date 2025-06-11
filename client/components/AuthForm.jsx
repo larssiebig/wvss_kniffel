@@ -15,14 +15,14 @@ export default function AuthForm({
         <h1 className="text-2xl font-bold mb-6 text-center">{title}</h1>
         <input
           type="text"
-          placeholder="Benutzername"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="w-full mb-4 p-2 border rounded"
         />
         <input
           type="password"
-          placeholder="Passwort"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full mb-6 p-2 border rounded"
