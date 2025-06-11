@@ -43,7 +43,7 @@ export default function App() {
     <Router>
       <Routes>
         {/* Public routes: only if not logged in */}
-        {!user && <Route path="/login" element={<Login />} />}
+        {!user && <Route path="/login" element={<Login user={user} setUser={setUser} />} />}
         {!user && <Route path="/register" element={<Register />} />}
 
         {/* Redirect if trying to access /login or /register when already logged in */}

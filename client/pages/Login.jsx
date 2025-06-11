@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/AuthForm";
 
-export default function Login({ user }) {
+export default function Login({ user, setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -15,7 +15,21 @@ export default function Login({ user }) {
         { username, password },
         { withCredentials: true }
       )
-      .then(() => navigate("/dashboard"));
+      .then((res) => {
+        if(res.data.success) {
+          setUser(res.data.user);
+          navigate("/dashboard");
+        } else {
+          alert("Login failed. Please check your credentials.");
+        }
+      })
+      .catch((error) => {
+        if(error.response?.status === 401) {
+          alert("Invalid username or password.");
+        } else {
+          alert("An error occurred while logging in. Please try again.");
+        }
+      })
   };
 
   if (user) {

@@ -23,19 +23,19 @@ export default function Register({ user }) {
       );
       navigate("/dashboard");
     } catch {
-      alert("Registrierung fehlgeschlagen.");
+      alert("Registration failed.");
     }
   };
 
   return (
     <AuthForm
-      title="Registrieren"
+      title="Register"
       username={username}
       password={password}
       setUsername={setUsername}
       setPassword={setPassword}
       onSubmit={handleRegister}
-      buttonText="Registrieren"
+      buttonText="Register"
     />
   );
 }
