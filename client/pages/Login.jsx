@@ -2,20 +2,37 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/AuthForm";
+import Modal from "../components/Modal";
 
-export default function Login({ user }) {
+export default function Login({ user, setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [modalMessage, setModalMessage] = useState(null);
   const navigate = useNavigate();
 
   const login = () => {
+    setModalMessage(null); // clear any previous modal message
     axios
       .post(
         "http://localhost:3001/api/login",
         { username, password },
         { withCredentials: true }
       )
-      .then(() => navigate("/dashboard"));
+      .then((res) => {
+        if(res.data.success) {
+          setUser(res.data.user);
+          navigate("/dashboard");
+        } else {
+          setModalMessage("Login failed. Please check your credentials.");
+        }
+      })
+      .catch((error) => {
+        if(error.response?.status === 401) {
+          setModalMessage("Invalid username or password.");
+        } else {
+          setModalMessage("An error occurred while logging in. Please try again.");
+        }
+      })
   };
 
   if (user) {
@@ -28,7 +45,8 @@ export default function Login({ user }) {
   }
 
   return (
-    <AuthForm
+    <>
+      <AuthForm
       title="Login"
       username={username}
       password={password}
@@ -37,5 +55,8 @@ export default function Login({ user }) {
       onSubmit={login}
       buttonText="Login"
     />
+
+      <Modal message={modalMessage} onClose={() => setModalMessage(null)} />
+     </>
   );
 }
