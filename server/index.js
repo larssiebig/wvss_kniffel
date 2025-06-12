@@ -49,7 +49,14 @@ app.post("/api/login", async (req, res) => {
   const user = await prisma.user.findUnique({ where: { username } });
   if (user && (await bcrypt.compare(password, user.password))) {
     req.session.userId = user.id;
-    res.json({ success: true });
+
+    req.session.save((error) => {
+      if(error) {
+        console.error("Session save error:", error);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    })
+    res.json({ success: true, user: { id: user.id, username: user.username } });
   } else {
     res.status(401).json({ error: "Invalid credentials" });
   }
@@ -69,7 +76,7 @@ app.get("/api/user", async (req, res) => {
   const user = await prisma.user.findUnique({
     where: { id: req.session.userId },
   });
-  res.json({ username: user.username });
+  res.json({ id: user.id, username: user.username });
 });
 
 // SAVE SCORE
@@ -81,14 +88,39 @@ app.post("/api/score", async (req, res) => {
   res.json({ success: true });
 });
 
-// GET TOP 10 SCORES
+// GET TOP 10 SCORES (only with existing user)
 app.get("/api/highscores", async (req, res) => {
-  const scores = await prisma.score.findMany({
-    orderBy: { value: "desc" },
-    take: 10,
-    include: { user: true },
+  try {
+    const users = await prisma.user.findMany({ select: { id: true } });
+    const userIds = users.map(u => u.id);
+    const scores = await prisma.score.findMany({
+      where: { userId: { in: userIds } },
+      orderBy: { value: "desc" },
+      take: 10,
+      include: { user: true },
   });
   res.json(scores);
+  } catch (error) {
+    console.error("Error loading highscores:", error);
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+});
+
+// DELETE USER (including scores)
+app.delete("/api/user/:id", async (req, res) => {
+  const userId = parseInt(req.params.id);
+  try {
+    await prisma.score.deleteMany({ // delete scores
+      where: { userId }
+    });
+    await prisma.user.delete({ // delete user
+      where: { id: userId } 
+    });
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
 });
 
 app.listen(PORT, () =>

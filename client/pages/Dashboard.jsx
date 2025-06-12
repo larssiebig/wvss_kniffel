@@ -2,28 +2,18 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function Dashboard({ user }) {
-  const [score, setScore] = useState(0);
   const [highscores, setHighscores] = useState([]);
-
-  const saveScore = () => {
-    axios
-      .post(
-        "http://localhost:3001/api/score",
-        { value: score },
-        { withCredentials: true }
-      )
-      .then(() => alert("Score gespeichert"));
-  };
 
   const loadHighscores = () => {
     axios
       .get("http://localhost:3001/api/highscores")
       .then((res) => setHighscores(res.data));
   };
+
   if (!user) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-xl text-gray-700">Bitte einloggen...</p>
+        <p className="text-xl text-gray-700">Please log in...</p>
       </div>
     );
   }
@@ -32,33 +22,15 @@ export default function Dashboard({ user }) {
     <div className="min-h-screen w-screen bg-gray-100 flex flex-col items-center py-12 px-4">
       <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
-          Hallo, {user.username}
+          Hello, {user.username}
         </h1>
 
-        <div className="mb-6 text-black">
-          <label className="block text-gray-600 font-medium mb-2">Score:</label>
-          <input
-            type="number"
-            value={score}
-            onChange={(e) =>
-              setScore(e.target.value ? Number(e.target.value) : 0)
-            }
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
         <div className="flex gap-4 mb-8">
-          <button
-            onClick={saveScore}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition"
-          >
-            Score speichern
-          </button>
           <button
             onClick={loadHighscores}
             className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition"
           >
-            Highscores laden
+            Load highscores
           </button>
         </div>
 
@@ -78,7 +50,7 @@ export default function Dashboard({ user }) {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500">Keine Highscores geladen.</p>
+            <p className="text-gray-500">No highscores loaded.</p>
           )}
         </div>
       </div>
