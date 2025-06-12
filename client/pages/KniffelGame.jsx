@@ -44,32 +44,32 @@ export default function KniffelGame({ user }) {
   }
 
   useEffect(() => {
-    if(isGameComplete) {
-      const totalScore = Object.values(scores).reduce(
-        (sum, val) => sum + (val ?? 0),
-        0,
-      );
+    if(!isGameComplete) return;
 
-      if(user) {
-        axios
-          .post(
-            "http://localhost:3001/api/score",
-            { value: totalScore },
-            { withCredentials: true }
-          )
-          .then(() => {
-            setSuccessMessage(
-              `Game is complete! Your score of ${totalScore} has been saved.`
-            );
-          })
-          .catch((error) => {
-            console.error("Score saving failed:", error);
-            setErrorMessage("Error saving your score");
-            setTimeout(() => setErrorMessage(null), 3000);
-          });
-      }
+    const totalScore = Object.values(scores).reduce(
+      (sum, val) => sum + (val ?? 0),
+      0,
+    );
+
+    if(user) {
+      axios
+        .post(
+          "http://localhost:3001/api/score",
+          { value: totalScore },
+          { withCredentials: true }
+        )
+        .then(() => {
+          setSuccessMessage(
+            `Game is complete! Your score of ${totalScore} has been saved.`
+          );
+        })
+        .catch((error) => {
+          console.error("Score saving failed:", error);
+          setErrorMessage("Error saving your score");
+          setTimeout(() => setErrorMessage(null), 3000);
+        });
     }
-  }, [scores]);
+  }, [isGameComplete]);
 
   const toggleKeep = (index) => {
     const newKept = [...kept];
@@ -195,7 +195,7 @@ export default function KniffelGame({ user }) {
         {categories.map((cat) => (
           <button
             key={cat}
-            disabled={scores[cat] !== null}
+            disabled={scores[cat] !== null || dice.includes(null)}
             onClick={() => scoreCategory(cat)}
             className={`p-2 border rounded text-left ${
               scores[cat] !== null
@@ -207,6 +207,12 @@ export default function KniffelGame({ user }) {
           </button>
         ))}
       </div>
+
+      {isGameComplete && (
+        <div className="mt-6 text-xl font-bold text-green-700 text-center">
+          Final score: {Object.values(scores).reduce((a, b) => a + (b ?? 0), 0)}
+        </div>
+      )}
 
       {successMessage && (
         <div
