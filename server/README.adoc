@@ -124,7 +124,7 @@ Simple health check.
 { "status": "ok" }
 ----
 
-== 📁 Project Structure
+== 📁 Backend Structure
 
 [source,text]
 ----

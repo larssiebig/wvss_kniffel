@@ -1,39 +1,28 @@
+// client/src/pages/KniffelGame.jsx
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { categories, calculateScore } from "../utils/score";
 
-const categories = [
-  "Ones",
-  "Twos",
-  "Threes",
-  "Fours",
-  "Fives",
-  "Sixes",
-  "Three of a Kind",
-  "Four of a Kind",
-  "Full House",
-  "Small Straight",
-  "Large Straight",
-  "Kniffel",
-  "Chance",
-];
-
+// Utility to roll a single die (1–6)
 function rollDie() {
   return Math.floor(Math.random() * 6) + 1;
 }
 
 export default function KniffelGame({ user }) {
-  const [dice, setDice] = useState(Array(5).fill(null));
-  const [kept, setKept] = useState(Array(5).fill(false));
-  const [rollsLeft, setRollsLeft] = useState(3);
-  const [scores, setScores] = useState(
+  const [dice, setDice] = useState(Array(5).fill(null));    // Current dice values
+  const [kept, setKept] = useState(Array(5).fill(false));   // Which dice are being kept
+  const [rollsLeft, setRollsLeft] = useState(3);            // Rolls left for the current turn
+  const [scores, setScores] = useState(                     // Score for each category
     Object.fromEntries(categories.map((c) => [c, null]))
   );
 
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);   // Message after saving score
+  const [errorMessage, setErrorMessage] = useState(null);       // Message on error
 
   const isGameComplete = Object.values(scores).every((val) => val !== null);
 
+  // Resets the game state
   const resetGame = () => {
     setDice(Array(5).fill(null));
     setKept(Array(5).fill(false));
@@ -43,6 +32,7 @@ export default function KniffelGame({ user }) {
     setErrorMessage(null);
   }
 
+  // Save score when game is complete
   useEffect(() => {
     if(!isGameComplete) return;
 
@@ -71,19 +61,22 @@ export default function KniffelGame({ user }) {
     }
   }, [isGameComplete]);
 
+  // Toggles whether a die is kept or not
   const toggleKeep = (index) => {
     const newKept = [...kept];
     newKept[index] = !newKept[index];
     setKept(newKept);
-  };
+  }
 
+  // Rolls all non-kept dice
   const rollDice = () => {
     if (rollsLeft === 0) return;
     const newDice = dice.map((d, i) => (kept[i] && d !== null ? d : rollDie()));
     setDice(newDice);
     setRollsLeft(rollsLeft - 1);
-  };
+  }
 
+  // Applies score to a selected category and resets turn
   const scoreCategory = (category) => {
     if (scores[category] !== null) return;
 
@@ -94,48 +87,7 @@ export default function KniffelGame({ user }) {
     setDice(Array(5).fill(null));
     setKept(Array(5).fill(false));
     setRollsLeft(3);
-  };
-
-  const calculateScore = (category, dice) => {
-    const counts = [0, 0, 0, 0, 0, 0];
-    dice.forEach((d) => counts[d - 1]++);
-
-    switch (category) {
-      case "Ones":
-      case "Twos":
-      case "Threes":
-      case "Fours":
-      case "Fives":
-      case "Sixes":
-        const num = categories.indexOf(category) + 1;
-        return dice.filter((d) => d === num).reduce((a, b) => a + b, 0);
-      case "Three of a Kind":
-        return counts.some((c) => c >= 3) ? dice.reduce((a, b) => a + b, 0) : 0;
-      case "Four of a Kind":
-        return counts.some((c) => c >= 4) ? dice.reduce((a, b) => a + b, 0) : 0;
-      case "Full House":
-        return counts.includes(3) && counts.includes(2) ? 25 : 0;
-      case "Small Straight":
-        return hasStraight(counts, 4) ? 30 : 0;
-      case "Large Straight":
-        return hasStraight(counts, 5) ? 40 : 0;
-      case "Kniffel":
-        return counts.includes(5) ? 50 : 0;
-      case "Chance":
-        return dice.reduce((a, b) => a + b, 0);
-      default:
-        return 0;
-    }
-  };
-
-  const hasStraight = (counts, length) => {
-    const binary = counts.map((c) => (c > 0 ? 1 : 0)).join("");
-    const patterns = {
-      4: ["1111", "01111", "11110"],
-      5: ["11111"],
-    };
-    return patterns[length].some((p) => binary.includes(p));
-  };
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-8 w-screen text-white">

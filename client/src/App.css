@@ -1,3 +1,7 @@
+/* client/src/App.css */
+
+/* Global styles for the React app, including root container layout, logo animation effects, and card styling. */
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
