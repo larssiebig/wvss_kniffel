@@ -44,6 +44,17 @@ The frontend uses session cookies managed by the backend for authentication.
 
 Routes like `/login` and `/register` are public; `/dashboard` and `/kniffel` require authentication.
 
+== Error and Success Messages
+
+All API errors are displayed to the user via modal dialogs or banners.  
+The frontend expects error responses in the format `{ "error": "Error message" }` and shows the message accordingly.
+
+.Example error response
+[source,json]
+----
+{ "error": "Invalid credentials." }
+----
+
 == 📁 Frontend Structure
 
 [source,text]

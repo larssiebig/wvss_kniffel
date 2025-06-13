@@ -6,6 +6,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const prisma = require("../lib/prisma");
 const asyncHandler = require("../utils/asyncHandler");
+const ERROR_MESSAGES = require("../utils/errorMessages");
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.post("/register", asyncHandler(async (req, res) => {
 
   const existing = await prisma.user.findUnique({ where: { username } });
   if(existing) {
-    return res.status(400).json({ error: "Username already taken." });
+    return res.status(400).json({ error: ERROR_MESSAGES.USERNAME_TAKEN });
   }
 
   const hash = await bcrypt.hash(password, 10);
@@ -32,11 +33,11 @@ router.post("/login", asyncHandler(async (req, res) => {
   if (user && await bcrypt.compare(password, user.password)) {
     req.session.userId = user.id;
     req.session.save(error => {
-      if(error) return res.status(500).json({ error: "Internal server error" });
+      if(error) return res.status(500).json({ error: ERROR_MESSAGES.INTERNAL });
       res.json({ success: true, user: { id: user.id, username: user.username } });
     });
   } else {
-    res.status(401).json({ error: "Invalid credentials" });
+    res.status(401).json({ error: ERROR_MESSAGES.INVALID_CREDENTIALS });
   }
 }));
 
