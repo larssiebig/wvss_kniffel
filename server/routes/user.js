@@ -19,12 +19,15 @@ router.get("/user", asyncHandler(async (req, res) => {
 }));
 
 
-// Delete a user and all their associated scores.
-router.delete("/user/:id", asyncHandler(async (req, res) => {
-  const userId = parseInt(req.params.id);
+// Delete the currently authenticated user and all their associated scores.
+router.delete("/user", isAuthenticated, asyncHandler(async (req, res) => {
+  const userId = req.session.userId;
   await prisma.score.deleteMany({ where: { userId } });
   await prisma.user.delete({ where: { id: userId } });
-  res.json({ success: true });
+  req.session.destroy(() => {
+    res.clearCookie("connect.sid");
+    res.json({ success: true });
+  });
 }));
 
 module.exports = router;

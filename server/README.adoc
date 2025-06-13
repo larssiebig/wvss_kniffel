@@ -83,16 +83,11 @@ Destroys the current user session.
 
 Returns information about the currently authenticated user.
 
-=== `DELETE /api/user/:id`
+=== `DELETE /api/user`
 
+Deletes the currently authenticated user and all their scores.
 
-Deletes the user with the given ID and all their scores.
-
-[NOTE]
-====
-This endpoint is not currently restricted to the logged-in user.
-You may want to protect it in production.
-====
+NOTE: This endpoint is now protected and only deletes the logged-in user.
 
 === `POST /api/score`
 
