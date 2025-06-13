@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { categories, calculateScore } from "../utils/score";
+import { categories, calculateScore, upperSectionSum, hasBonus } from "../utils/score";
 
 // Utility to roll a single die (1–6)
 function rollDie() {
@@ -36,10 +36,12 @@ export default function KniffelGame({ user }) {
   useEffect(() => {
     if(!isGameComplete) return;
 
+    const upperSum = upperSectionSum(scores);
+    const bonus = hasBonus(scores) ? 35 : 0;
     const totalScore = Object.values(scores).reduce(
       (sum, val) => sum + (val ?? 0),
       0,
-    );
+    ) + bonus;
 
     if(user) {
       axios
@@ -54,12 +56,12 @@ export default function KniffelGame({ user }) {
           );
         })
         .catch((error) => {
-          console.error("Score saving failed:", error);
-          setErrorMessage("Error saving your score");
+          const message = error.response?.data?.error || "Error saving your score";
+          setErrorMessage(message);
           setTimeout(() => setErrorMessage(null), 3000);
         });
     }
-  }, [isGameComplete]);
+  }, [isGameComplete, scores, user]);
 
   // Toggles whether a die is kept or not
   const toggleKeep = (index) => {
@@ -160,9 +162,34 @@ export default function KniffelGame({ user }) {
         ))}
       </div>
 
+      <div className="mt-6 text-lg text-center text-gray-700">
+        <div>
+          Upper section sum: <span className="font-bold">{upperSectionSum(scores)}</span>
+        </div>
+        <div>
+          Bonus: {hasBonus(scores) ? (
+            <span className="text-green-700 font-bold">+35</span>
+          ) : (
+            <span className="text-red-600 font-bold">
+              {upperSectionSum(scores)} / 63
+            </span>
+          )}
+        </div>
+      </div>
+
       {isGameComplete && (
         <div className="mt-6 text-xl font-bold text-green-700 text-center">
-          Final score: {Object.values(scores).reduce((a, b) => a + (b ?? 0), 0)}
+          <div>Upper section sum: {upperSectionSum(scores)}</div>
+          <div>
+            Bonus: {hasBonus(scores) ? (
+              <span className="text-green-700 font-bold">+35</span>
+            ) : (
+              <span className="text-red-600 font-bold">0</span>
+            )}
+          </div>
+          <div>
+            Final score: {Object.values(scores).reduce((a, b) => a + (b ?? 0), 0) + (hasBonus(scores) ? 35 : 0)}
+          </div>
         </div>
       )}
 

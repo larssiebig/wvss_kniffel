@@ -29,6 +29,20 @@ npm run dev
 
 Open `http://localhost:5173` in your browser to see the app.
 
+== 🎲 Kniffel Rules & Scoring
+
+* 5 dice, up to 3 rolls per turn, keep any dice between rolls.
+* Categories:
+  ** Ones–Sixes: Sum of matching dice.
+  ** Three of a Kind: At least 3 same, sum all dice.
+  ** Four of a Kind: At least 4 same, sum all dice.
+  ** Full House: 3 same + 2 same, 25 points.
+  ** Small Straight: 4 consecutive, 30 points.
+  ** Large Straight: 5 consecutive, 40 points.
+  ** Kniffel: 5 same, 50 points.
+  ** Chance: Sum of all dice.
+* Bonus: 35 points if upper section ≥ 63.
+
 == 🧠 Tech Stack
 
 * React — UI library
