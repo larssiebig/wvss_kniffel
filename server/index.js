@@ -1,163 +1,49 @@
 // server/index.js
+
+// Main server setup and route integration.
+
+require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const cors = require("cors");
-const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
-const { PrismaClient } = require("@prisma/client");
+const authRoutes = require("./routes/auth");
+const scoreRoutes = require("./routes/score");
+const userRoutes = require("./routes/user");
+const errorHandler = require("./middleware/errorHandler");
 
-const prisma = new PrismaClient();
 const app = express();
 const PORT = 3001;
 
-// CORS setup to allow frontend access with credentials (cookies)
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+// Enable CORS for frontend origin and credentials (cookies).
+app.use(cors({ origin: process.env.FRONTEND_ORIGIN, credentials: true }));
 app.use(bodyParser.json());
 
-// Session config with cookie options
-app.use(
-  session({
-    secret: "supersecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: false, // set to true if using HTTPS in production
-      sameSite: "lax",
-    },
-  })
-);
+// Configure session management with cookie settings.
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  },
+}));
 
-// REGISTER
-app.post("/api/register", async (req, res) => {
-  const { username, password } = req.body;
-  const hash = await bcrypt.hash(password, 10);
-  try {
-    const user = await prisma.user.create({
-      data: { username, password: hash },
-    });
-    req.session.userId = user.id;
-    res.json({ success: true });
-  } catch (e) {
-    res.status(400).json({ error: "Username exists" });
-  }
-});
+// Mount route modules.
+app.use("/api", authRoutes);
+app.use("/api", scoreRoutes);
+app.use("/api", userRoutes);
 
-// LOGIN
-app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
-  const user = await prisma.user.findUnique({ where: { username } });
-  if (user && (await bcrypt.compare(password, user.password))) {
-    req.session.userId = user.id;
+// Simple health check endpoint.
+app.get("/health", (req, res) => res.json({ status: "ok" }));
 
-    req.session.save((error) => {
-      if(error) {
-        console.error("Session save error:", error);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-    })
-    res.json({ success: true, user: { id: user.id, username: user.username } });
-  } else {
-    res.status(401).json({ error: "Invalid credentials" });
-  }
-});
 
-// LOGOUT
-app.post("/api/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.clearCookie("connect.sid"); // default cookie name used by express-session
-    res.json({ success: true });
-  });
-});
+// Global error handler middleware.
+app.use(errorHandler);
 
-// GET CURRENT USER
-app.get("/api/user", async (req, res) => {
-  if (!req.session.userId) return res.json(null);
-  const user = await prisma.user.findUnique({
-    where: { id: req.session.userId },
-  });
-  res.json({ id: user.id, username: user.username });
-});
-
-// SAVE SCORE
-app.post("/api/score", async (req, res) => {
-  if (!req.session.userId)
-    return res.status(401).json({ error: "Not logged in" });
-  const { value } = req.body;
-  await prisma.score.create({ data: { value, userId: req.session.userId } });
-  res.json({ success: true });
-});
-
-// GET TOP 10 SCORES (only with existing user)
-app.get("/api/highscores", async (req, res) => {
-  try {
-    const users = await prisma.user.findMany({ select: { id: true } });
-    const userIds = users.map(u => u.id);
-    const scores = await prisma.score.findMany({
-      where: { userId: { in: userIds } },
-      orderBy: { value: "desc" },
-      take: 10,
-      include: { user: true },
-  });
-  res.json(scores);
-  } catch (error) {
-    console.error("Error loading highscores:", error);
-    res.status(500).json({ error: "Internal server error", details: error.message });
-  }
-});
-
-// GET OWN TOP SCORES
-app.get("/api/my-scores", async (req, res) => {
-  if(!req.session.userId)
-    return res.status(401).json({ error: "Not logged in" });
-
-  try {
-    const scores = await prisma.score.findMany({
-      where: { userId: req.session.userId },
-      orderBy: { value: "desc" },
-      take: 10,
-    });
-    res.json(scores);
-  } catch (error) {
-    console.error("Error loading user scores:", error);
-    res.status(500).json({ error: "Internal server error", details: error.message });
-  }
-})
-
-// GET FULL HISTORY for logged-in user
-app.get("/api/my-history", async (req, res) => {
-  if (!req.session.userId)
-    return res.status(401).json({ error: "Not logged in" });
-
-  try {
-    const history = await prisma.score.findMany({
-      where: { userId: req.session.userId },
-      orderBy: { date: "desc" },
-    });
-    res.json(history);
-  } catch (error) {
-    console.error("Error loading game history:", error);
-    res.status(500).json({ error: "Internal server error", details: error.message});
-  }
-});
-
-// DELETE USER (including scores)
-app.delete("/api/user/:id", async (req, res) => {
-  const userId = parseInt(req.params.id);
-  try {
-    await prisma.score.deleteMany({ // delete scores
-      where: { userId }
-    });
-    await prisma.user.delete({ // delete user
-      where: { id: userId } 
-    });
-    res.json({ success: true });
-  } catch (error) {
-    console.error("Error deleting user:", error);
-    res.status(500).json({ error: "Internal server error", details: error.message });
-  }
-});
-
+// Start the server.
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
 );
