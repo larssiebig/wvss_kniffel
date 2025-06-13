@@ -1,0 +1,106 @@
+= Kniffel Frontend
+:toc:
+:icons: font
+
+This project is a React frontend application built with Vite, providing the user interface for the Kniffel game.
+
+== 🚀 Getting Started
+
+=== Prerequisites
+
+* Node.js (v18 or later)
+* Backend API running at `http://localhost:3001` (see xref:../server/README.adoc[Kniffel Backend])
+
+=== Installation
+
+Install dependencies inside the `client/` directory:
+
+[source,bash]
+----
+npm install
+----
+
+Start the development server:
+
+[source,bash]
+----
+npm run dev
+----
+
+Open `http://localhost:5173` in your browser to see the app.
+
+== 🎲 Kniffel Rules & Scoring
+
+* 5 dice, up to 3 rolls per turn, keep any dice between rolls.
+* Categories:
+  ** Ones–Sixes: Sum of matching dice.
+  ** Three of a Kind: At least 3 same, sum all dice.
+  ** Four of a Kind: At least 4 same, sum all dice.
+  ** Full House: 3 same + 2 same, 25 points.
+  ** Small Straight: 4 consecutive, 30 points.
+  ** Large Straight: 5 consecutive, 40 points.
+  ** Kniffel: 5 same, 50 points.
+  ** Chance: Sum of all dice.
+* Bonus: 35 points if upper section ≥ 63.
+
+== 🧠 Tech Stack
+
+* React — UI library
+* Vite — Frontend build tool and dev server
+* React Router — Client-side routing
+* Axios — HTTP client for API requests
+* Tailwind CSS — Utility-first CSS framework
+* ESLint — Code linting
+
+== 🔐 Authentication
+
+The frontend uses session cookies managed by the backend for authentication.
+
+Routes like `/login` and `/register` are public; `/dashboard` and `/kniffel` require authentication.
+
+== Error and Success Messages
+
+All API errors are displayed to the user via modal dialogs or banners.  
+The frontend expects error responses in the format `{ "error": "Error message" }` and shows the message accordingly.
+
+.Example error response
+[source,json]
+----
+{ "error": "Invalid credentials." }
+----
+
+== 📁 Frontend Structure
+
+[source,text]
+----
+client/
+├── public/
+│   └── vite.svg                → Static asset
+├── src/            
+│   ├── assets/     
+│   │   └── react.svg           → Static asset
+│   ├── components/
+│   │   ├── AuthForm.jsx        → Auth form for login and register
+│   │   ├── Layout.jsx          → Layout with Navbar and page container
+│   │   ├── Modal.jsx           → Modal dialog component
+│   │   └── Navbar.jsx          → Navigation bar with auth links
+│   ├── pages/
+│   │   ├── Dashboard.jsx       → User dashboard and scores
+│   │   ├── Home.jsx            → Landing page
+│   │   ├── KniffelGame.jsx     → Kniffel game UI and logic
+│   │   ├── Login.jsx           → Login page and form
+│   │   └── Register.jsx        → Registration page and form
+│   ├── utils/
+│   │   └── score.js            → Kniffel scoring logic
+│   ├── App.css                 → Global app styles
+│   ├── App.jsx                 → Root app component and routing
+│   ├── index.css               → Global base styles with Tailwind
+│   ├── main.jsx                → React entry point
+├── .gitignore                  → Git ignore rules
+├── eslint.config.js            → ESLint config for JS/React
+├── index.html                  → Main HTML template
+├── package-lock.json           → Dependency lockfile
+├── package.json                → Project metadata and scripts
+├── README.adoc                 → Backend documentation (AsciiDoc)
+└── vite.config.js              → Vite config with plugins
+----

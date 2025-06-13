@@ -1,3 +1,10 @@
+/* client/src/index.css */
+
+/*
+Base global styles for the frontend, setting up typography, colors (light and dark modes), link/button styles, and basic layout.
+Imports Tailwind CSS for utility-first styling support.
+*/
+
 @import "tailwindcss";
 
 :root {
