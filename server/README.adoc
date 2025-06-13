@@ -1,0 +1,153 @@
+= Kniffel Backend
+:toc:
+:icons: font
+
+This project is a Node.js backend API using Express and Prisma for managing users and their game scores.
+
+== 🚀 Getting Started
+
+=== Prerequisites
+
+* Node.js (v18 or later)
+* PostgreSQL or any Prisma-supported database
+* Frontend running at `http://localhost:5173` (or configured via `.env`)
+
+=== Installation
+
+Install dependencies:
+
+[source,bash]
+----
+npm install
+node index.js
+----
+
+=== Environment Variables
+
+Create a `.env` file in the `server/` directory with the following content:
+
+[source,env]
+----
+PORT=3001
+SESSION_SECRET=supersecret
+FRONTEND_ORIGIN=http://localhost:5173
+----
+
+[WARNING]
+====
+Never commit your `.env` file to version control.  
+Keep `SESSION_SECRET` long and secure (use a password generator).
+====
+
+== 🧠 Tech Stack
+
+* Express.js — Web framework
+* Prisma ORM — Database client
+* SQLite — Default development database (`dev.db`)
+* express-session — Cookie-based session management
+* bcryptjs — Secure password hashing
+* dotenv — Environment variable management
+* cors — Cross-Origin Resource Sharing middleware
+* body-parser — Request body parsing
+
+== 🔐 Authentication
+
+The app uses session-based authentication.
+After registering or logging in, a session is stored and managed using cookies.
+
+== 📦 API Endpoints
+
+=== `POST /api/register`
+
+Registers a new user and starts a session.
+
+[source,json]
+----
+{ "username": "name", "password": "pass" }
+----
+
+=== `POST /api/login`
+
+Logs in a user and starts a session.
+
+[source,json]
+----
+{ "username": "name", "password": "pass" }
+----
+
+=== `POST /api/logout`
+
+Destroys the current user session.
+
+=== `GET /api/user`
+
+Returns information about the currently authenticated user.
+
+=== `DELETE /api/user/:id`
+
+
+Deletes the user with the given ID and all their scores.
+
+[NOTE]
+====
+This endpoint is not currently restricted to the logged-in user.
+You may want to protect it in production.
+====
+
+=== `POST /api/score`
+
+Submits a new score (requires authentication).
+
+[source,json]
+----
+{ "value": 100 }
+----
+
+=== `GET /api/highscores`
+
+Returns the top 10 scores globally.
+
+=== `GET /api/my-scores`
+
+Returns the top 10 scores of the authenticated user.
+
+=== `GET /api/my-history`
+
+Returns the full score history of the authenticated user.
+
+=== `GET /health`
+
+Simple health check.
+
+[source,json]
+----
+{ "status": "ok" }
+----
+
+== 📁 Project Structure
+
+[source,text]
+----
+server/
+├── lib/
+│   └── prisma.js                 → Prisma Client instance
+├── middleware/
+│   ├── auth.js                   → Session-based auth middleware
+│   └── errorHandler.js           → Global error handling middleware
+├── prisma/
+│   ├── dev.db                    → SQLite development database
+│   ├── schema.prisma             → Prisma schema definition
+│   └── migrations/
+│       ├── migration_lock.toml   → Prisma migration lock file
+│       └── 20250526061148_init/
+│           └── migration.sql     → SQL definition of initial migration
+├── routes/
+│   ├── auth.js                   → Routes for registration, login, logout
+│   ├── score.js                  → Routes for submitting and retrieving scores
+│   └── user.js                   → Routes for user info and deletion
+├── utils/
+│   └── asyncHandler.js           → Wrapper for async route handlers
+├── .env                          → Environment variables (not committed)
+├── index.js                      → Application entry point
+└── README.adoc                   → Backend documentation (AsciiDoc)
+----
