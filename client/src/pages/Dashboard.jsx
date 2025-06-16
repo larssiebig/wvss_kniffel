@@ -10,6 +10,8 @@ export default function Dashboard({ user }) {
   const [myHistory, setMyHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [myStats, setMyStats] = useState(null);
+  const [globalStats, setGlobalStats] = useState(null);
   const [modalMessage, setModalMessage] = useState(null);
 
   // Load top global highscores from backend
@@ -59,6 +61,34 @@ export default function Dashboard({ user }) {
     }
   }
 
+  // Load personal statistics for the user
+  const loadMyStats = () => {
+    axios
+      .get(
+        "http://localhost:3001/api/my-stats",
+        { withCredentials: true }
+      )
+      .then((res) => setMyStats(res.data))
+      .catch((error) => {
+        const message = error.response?.data?.error || "Failed to load your statistics.";
+        setModalMessage(message);
+      });
+  }
+
+  const loadGlobalStats = () => {
+    axios
+      .get(
+        "http://localhost:3001/api/global-stats",
+        { withCredentials: true }
+      )
+      .then((res) => setGlobalStats(res.data))
+      .catch((error) => {
+        const message = error.response?.data?.error || "Failed to load global statistics.";
+        setModalMessage(message);
+      });
+  }
+
+
   // Toggle showing the game history panel
   const toggleHistory = async () => {
     if(!showHistory) await loadMyHistory();
@@ -69,7 +99,9 @@ export default function Dashboard({ user }) {
   useEffect(() => {
     if (user) {
       loadHighscores();
-      loadMyScores();  
+      loadMyScores();
+      loadMyStats();
+      loadGlobalStats();
     }
   }, [user]);
 
@@ -108,6 +140,36 @@ export default function Dashboard({ user }) {
           >
             {showHistory ? "Hide Game History" : "Show Game History"}
           </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div>
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+              Your Statistics
+            </h2>
+            {myStats ? (
+              <ul className="space-y-1 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4 shadow text-gray-900 dark:text-gray-100">
+                <li>Games played: <span className="font-bold">{myStats.gamesPlayed}</span></li>
+                <li>Average score: <span className="font-bold">{myStats.avgScore}</span></li>
+              </ul>
+            ) : (
+              <p className="text-gray-500 dark:text-gray-400">Loading...</p>
+            )}
+          </div>
+
+          <div>
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+              Global Statistics
+            </h2>
+            {globalStats ? (
+              <ul className="space-y-1 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4 shadow text-gray-900 dark:text-gray-100">
+                <li>Games played: <span className="font-bold">{globalStats.gamesPlayed}</span></li>
+                <li>Average score: <span className="font-bold">{globalStats.avgScore}</span></li>
+              </ul>
+            ) : (
+              <p className="text-gray-500 dark:text-gray-400">Loading...</p>
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
