@@ -1,3 +1,9 @@
+// client/src/pages/Home.jsx
+
+// Simple landing page displayed at root URL ("/")
+// Shows welcome message and brief app description
+// Does not depend on user state or backend
+
 export default function Home() {
   return (
     <>
