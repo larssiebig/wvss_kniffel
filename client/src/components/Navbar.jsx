@@ -77,6 +77,10 @@ export default function Navbar({ user, setUser }) {
               <Link to="/dashboard" className="text-blue-600">
                 Dashboard
               </Link>
+              <Link to="/rules" className="text-blue-600">
+                Rules
+              </Link>
+
               <button onClick={handleLogout} className="text-red-600">
                 Logout
               </button>
