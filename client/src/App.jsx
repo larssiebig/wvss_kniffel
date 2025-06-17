@@ -21,9 +21,9 @@ import { Outlet } from "react-router-dom";
 // Outlet is where the nested route components will be rendered.
 function Layout({ user, setUser }) {
   return (
-    <div className="w-screen min-h-screen bg-gray-100 text-black">
+    <div className="w-screen min-h-screen bg-gray-100 text-black dark:bg-gray-900 dark:text-white">
       <Navbar user={user} setUser={setUser} />
-      <div className="p-4">
+      <div className="p-4 md:p-8 max-w-7xl mx-auto">
         <Outlet />
       </div>
     </div>
@@ -44,7 +44,12 @@ export default function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return null; // or a spinner
+  if (loading)
+  return (
+    <div className="w-screen h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500" />
+    </div>
+  );
 
   return (
     <Router>
