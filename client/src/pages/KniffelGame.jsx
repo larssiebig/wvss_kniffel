@@ -92,7 +92,7 @@ export default function KniffelGame({ user }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8 w-screen text-gray-900 dark:text-white">
+    <div className="max-w-3xl mx-auto min-h-screen bg-gray-100 dark:bg-gray-900 p-8 w-screen text-gray-900 dark:text-white">
       <div className="flex justify-center mb-4">
         {dice.map((d, i) => (
           <button
