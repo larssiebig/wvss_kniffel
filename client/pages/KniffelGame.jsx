@@ -53,8 +53,6 @@ export default function KniffelGame({ user }) {
     const newScores = { ...scores };
     newScores[category] = calculateScore(category, dice);
     setScores(newScores);
-    // Reset turn
-    setScores(newScores);
     setDice(Array(5).fill(null));
     setKept(Array(5).fill(false));
     setRollsLeft(3);
@@ -108,13 +106,21 @@ export default function KniffelGame({ user }) {
           <button
             key={i}
             onClick={() => toggleKeep(i)}
-            className={`w-14 h-14 m-2 flex items-center justify-center rounded-lg text-xl font-bold border-4 transition-colors duration-150 ${
+            className={`w-20 h-20 m-2 p-0 border-2 rounded-lg overflow-hidden flex items-center justify-center ${
               kept[i]
                 ? "border-blue-500 bg-blue-100"
                 : "border-gray-300 bg-white hover:border-gray-400"
             }`}
           >
-            {d !== null ? d : "-"}
+            {d !== null ? (
+              <img
+                src={`/dice-${d}.png`}
+                alt={`Dice ${d}`}
+                className="w-10 h-10 object-cover"
+              />
+            ) : (
+              "-"
+            )}
           </button>
         ))}
       </div>
@@ -130,20 +136,29 @@ export default function KniffelGame({ user }) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            disabled={scores[cat] !== null}
-            onClick={() => scoreCategory(cat)}
-            className={`p-2 border rounded text-left ${
-              scores[cat] !== null
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-white"
-            }`}
-          >
-            {cat}: {scores[cat] ?? "-"}
-          </button>
-        ))}
+        {categories.map((cat) => {
+          const isChosen = scores[cat] !== null;
+          const isPreview = !isChosen && dice.every((d) => d !== null);
+          const previewScore = isPreview ? calculateScore(cat, dice) : "-";
+
+          return (
+            <button
+              key={cat}
+              disabled={isChosen}
+              onClick={() => scoreCategory(cat)}
+              className={`p-2 border rounded text-left transition-colors duration-200 ${
+                isChosen
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-100"
+              }`}
+            >
+              {cat}:{" "}
+              <span className={isPreview ? "text-gray-400" : ""}>
+                {isChosen ? scores[cat] : previewScore}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
