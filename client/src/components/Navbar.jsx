@@ -35,7 +35,7 @@ export default function Navbar({ user, setUser }) {
 
     try {
       // delete account on backend
-      await axios.delete(`http://localhost:3001/api/user/${user.id}`, {
+      await axios.delete("http://localhost:3001/api/user/", {
         withCredentials: true,
       });
 
