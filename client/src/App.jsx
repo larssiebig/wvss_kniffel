@@ -21,7 +21,7 @@ import { Outlet } from "react-router-dom";
 // Outlet is where the nested route components will be rendered.
 function Layout({ user, setUser }) {
   return (
-    <div className="w-screen min-h-screen bg-gray-100 text-black dark:bg-gray-900 dark:text-white">
+    <div className="w-full min-h-screen overflow-x-hidden bg-gray-100 text-black dark:bg-gray-900 dark:text-white">
       <Navbar user={user} setUser={setUser} />
       <div className="p-4 md:p-8 max-w-7xl mx-auto">
         <Outlet />
