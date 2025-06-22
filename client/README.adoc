@@ -31,17 +31,31 @@ Open `http://localhost:5173` in your browser to see the app.
 
 == 🎲 Kniffel Rules & Scoring
 
-* 5 dice, up to 3 rolls per turn, keep any dice between rolls.
-* Categories:
-  ** Ones–Sixes: Sum of matching dice.
-  ** Three of a Kind: At least 3 same, sum all dice.
-  ** Four of a Kind: At least 4 same, sum all dice.
-  ** Full House: 3 same + 2 same, 25 points.
-  ** Small Straight: 4 consecutive, 30 points.
-  ** Large Straight: 5 consecutive, 40 points.
-  ** Kniffel: 5 same, 50 points.
-  ** Chance: Sum of all dice.
-* Bonus: 35 points if upper section ≥ 63.
+* You play with 5 dice.
+* Each turn allows up to 3 rolls.
+* After each roll, you can keep any dice and re-roll the others.
+* After rolling, you must select one unused scoring category.
+
+=== Sections
+
+* *Upper Section*: Ones through Sixes (sum of matching dice).
+  ** Bonus: 35 points if total is 63 or higher.
+* *Lower Section*: Combination-based categories.
+
+=== Scoring Categories
+
+[cols="1,2", options="header", width=100%]
+|===
+| Category             | Description / Points
+| Ones – Sixes         | Add all dice showing that number
+| Three of a Kind      | At least 3 same – sum of all dice
+| Four of a Kind       | At least 4 same – sum of all dice
+| Full House           | 3 of one kind + 2 of another – *25 points*
+| Small Straight       | 4 consecutive numbers (e.g. 1-2-3-4) – *30 points*
+| Large Straight       | 5 consecutive numbers (e.g. 2-3-4-5-6) – *40 points*
+| Kniffel              | All 5 dice the same – *50 points*
+| Chance               | Sum of all dice – no restrictions
+|===
 
 == 🧠 Tech Stack
 
@@ -89,7 +103,8 @@ client/
 │   │   ├── Home.jsx            → Landing page
 │   │   ├── KniffelGame.jsx     → Kniffel game UI and logic
 │   │   ├── Login.jsx           → Login page and form
-│   │   └── Register.jsx        → Registration page and form
+│   │   ├── Register.jsx        → Registration page and form
+│   │   └── Rules.jsx           → Game rules and scoring overview
 │   ├── utils/
 │   │   └── score.js            → Kniffel scoring logic
 │   ├── App.css                 → Global app styles
