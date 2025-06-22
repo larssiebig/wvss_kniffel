@@ -106,11 +106,18 @@ export default function KniffelGame({ user }) {
           <button
             key={i}
             onClick={() => toggleKeep(i)}
-            className={`w-20 h-20 m-2 p-0 border-2 rounded-lg overflow-hidden flex items-center justify-center ${
+            style={
               kept[i]
-                ? "border-blue-500 bg-blue-100"
-                : "border-gray-300 bg-white hover:border-gray-400"
-            }`}
+                ? {
+                    backgroundColor: "#bfdbfe",
+                    color: "black",
+                  }
+                : {
+                    backgroundColor: "#1a1a1a",
+                    color: "white",
+                  }
+            }
+            className="w-14 h-14 m-2 flex items-center justify-center rounded-lg text-xl font-bold transition-colors duration-150"
           >
             {d !== null ? (
               <img
