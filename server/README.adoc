@@ -119,6 +119,24 @@ Simple health check.
 { "status": "ok" }
 ----
 
+== Error Handling
+
+All error responses have the following format:
+
+[source,json]
+----
+{ "error": "Error message" }
+----
+
+Possible error messages include:
+
+* "Username already taken."
+* "Invalid credentials."
+* "Not logged in."
+* "User not found."
+* "Internal server error."
+* "Invalid score value."
+
 == 📁 Backend Structure
 
 [source,text]

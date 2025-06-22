@@ -22,7 +22,12 @@ export default function Navbar({ user, setUser }) {
     setUser(null);
     navigate("/");
     } catch (error) {
-      setModalMessage("Error logging out. Please try again later.");
+      console.error("Error logging out:", error);
+      if(error.response?.data?.error) {
+        setModalMessage(`Error: ${error.response.data.error}`);
+      } else {
+        setModalMessage("There was an error logging out. Please try again later.");
+      }
     }
   }
 
@@ -45,7 +50,11 @@ export default function Navbar({ user, setUser }) {
       setModalMessage("Your account has been deleted successfully.");
     } catch (error) {
       console.error("Error deleting account:", error);
-      setModalMessage("There was an error deleting your account. Please try again later.");
+      if(error.response?.data?.error) {
+        setModalMessage(`Error: ${error.response.data.error}`);
+      } else {
+        setModalMessage("There was an error deleting your account. Please try again later.");
+      }
     }
   }
 
