@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import KniffelGame from "./pages/KniffelGame";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import Rules from "./pages/Rules";
 import { Outlet } from "react-router-dom";
 
 // Layout component wraps each page with shared UI components like Navbar.
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard user={user} />} />
           <Route path="/kniffel" element={<KniffelGame user={user} />} />
+          <Route path="/rules" element={<Rules />} />
         </Route>
       </Routes>
     </Router>

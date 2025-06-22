@@ -17,7 +17,6 @@ export const categories = [
   "Chance",
 ];
 
-
 // Calculates the score for a given category based on the current dice values.
 export function calculateScore(category, dice) {
   const counts = [0, 0, 0, 0, 0, 0];        // Tracks how many times each die face appears
