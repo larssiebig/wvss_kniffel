@@ -45,4 +45,35 @@ router.get("/my-history", isAuthenticated, asyncHandler(async (req, res) => {
   res.json(history);
 }));
 
+// Get personal statistics for the logged-in user
+router.get("/my-stats", isAuthenticated, asyncHandler(async (req, res) => {
+  const userId = req.session.userId;
+  const scores = await prisma.score.findMany({
+    where: { userId }
+  });
+
+  const avgScore = scores.length
+    ? Math.round(scores.reduce((sum, score) => sum + score.value, 0) / scores.length)
+    : 0;
+
+  res.json({
+    gamesPlayed: scores.length,
+    avgScore,
+  });
+}));
+
+// Get global statistics
+router.get("/global-stats", asyncHandler(async (req, res) => {
+  const scores = await prisma.score.findMany();
+
+  const avgScore = scores.length
+    ? Math.round(scores.reduce((sum, score) => sum + score.value, 0) / scores.length)
+    : 0;
+
+  res.json({
+    gamesPlayed: scores-this.length,
+    avgScore,
+  });
+}));
+
 module.exports = router;
