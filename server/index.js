@@ -106,6 +106,24 @@ app.get("/api/highscores", async (req, res) => {
   }
 });
 
+// GET OWN SCORES
+app.get("/api/my-scores", async (req, res) => {
+  if(!req.session.userId)
+    return res.status(401).json({ error: "Not logged in" });
+
+  try {
+    const scores = await prisma.score.findMany({
+      where: { userId: req.session.userId },
+      orderBy: { value: "desc" },
+      take: 10,
+    });
+    res.json(scores);
+  } catch (error) {
+    console.error("Error loading user scores:", error);
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+})
+
 // DELETE USER (including scores)
 app.delete("/api/user/:id", async (req, res) => {
   const userId = parseInt(req.params.id);
