@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const categories = [
   "Ones",
@@ -20,12 +21,6 @@ function rollDie() {
   return Math.floor(Math.random() * 6) + 1;
 }
 
-function rollAllDice(kept) {
-  return Array(5)
-    .fill(0)
-    .map((_, i) => (kept[i] ? null : rollDie()));
-}
-
 export default function KniffelGame({ user }) {
   const [dice, setDice] = useState(Array(5).fill(null));
   const [kept, setKept] = useState(Array(5).fill(false));
@@ -33,6 +28,48 @@ export default function KniffelGame({ user }) {
   const [scores, setScores] = useState(
     Object.fromEntries(categories.map((c) => [c, null]))
   );
+
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const isGameComplete = Object.values(scores).every((val) => val !== null);
+
+  const resetGame = () => {
+    setDice(Array(5).fill(null));
+    setKept(Array(5).fill(false));
+    setRollsLeft(3);
+    setScores(Object.fromEntries(categories.map((c) => [c, null])));
+    setSuccessMessage(null);
+    setErrorMessage(null);
+  }
+
+  useEffect(() => {
+    if(isGameComplete) {
+      const totalScore = Object.values(scores).reduce(
+        (sum, val) => sum + (val ?? 0),
+        0,
+      );
+
+      if(user) {
+        axios
+          .post(
+            "http://localhost:3001/api/score",
+            { value: totalScore },
+            { withCredentials: true }
+          )
+          .then(() => {
+            setSuccessMessage(
+              `Game is complete! Your score of ${totalScore} has been saved.`
+            );
+          })
+          .catch((error) => {
+            console.error("Score saving failed:", error);
+            setErrorMessage("Error saving your score");
+            setTimeout(() => setErrorMessage(null), 3000);
+          });
+      }
+    }
+  }, [scores]);
 
   const toggleKeep = (index) => {
     const newKept = [...kept];
@@ -52,6 +89,10 @@ export default function KniffelGame({ user }) {
 
     const newScores = { ...scores };
     newScores[category] = calculateScore(category, dice);
+<<<<<<< HEAD
+=======
+    // Reset turn
+>>>>>>> 883c5da4a5ac47010dee3518a9bfe405146adfcc
     setScores(newScores);
     setDice(Array(5).fill(null));
     setKept(Array(5).fill(false));
@@ -132,13 +173,32 @@ export default function KniffelGame({ user }) {
         ))}
       </div>
 
-      <div className="flex justify-center mb-6">
-        <button
+      <div className="flex justify-center gap-4 mb-6">
+        {!isGameComplete && (
+          <button
           onClick={rollDice}
           disabled={rollsLeft === 0}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+          >
+            Roll Dice ({rollsLeft} left)
+          </button>
+        )}
+        <button
+          onClick={resetGame}
+          style={
+            isGameComplete
+              ? {
+                backgroundColor: "#ef4444",
+                color: "white",
+              }
+              : {
+                backgroundColor: "#fdc9c9",
+                color: "#242424",
+              }
+          }
+          className="px-4 py-2 rounded font-semibold transition-colors duration-200"
         >
-          Roll Dice ({rollsLeft} left)
+          New Game
         </button>
       </div>
 
@@ -167,6 +227,24 @@ export default function KniffelGame({ user }) {
           );
         })}
       </div>
+
+      {successMessage && (
+        <div
+          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded shadow-lg font-semibold"
+          style={{ zIndex: 1000 }}
+        >
+          {successMessage}
+        </div>
+      )}
+
+      {errorMessage && (
+        <div
+          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded shadow-lg font-semibold"
+          style={{ zIndex: 1000 }}
+        >
+          {errorMessage}
+        </div>
+      )}
     </div>
   );
 }
