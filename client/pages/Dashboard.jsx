@@ -28,7 +28,7 @@ export default function Dashboard({ user }) {
   useEffect(() => {
     if (user) {
       loadHighscores();
-      loadMyScores;  
+      loadMyScores();  
     }
   }, [user]);
 
