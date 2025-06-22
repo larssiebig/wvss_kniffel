@@ -60,9 +60,9 @@ export default function Navbar({ user, setUser }) {
 
   return (
     <>
-      <nav className="w-full text-black bg-white shadow px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-gray-800">
-          <Link to="/" className="hover:text-black-600">
+      <nav className="w-full text-black dark:text-white bg-white dark:bg-gray-900 shadow dark:shadow-lg px-6 py-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+          <Link to="/" className="hover:text-gray-600 dark:hover:text-gray-300">
             Kniffel App
           </Link>
         </h1>
@@ -70,23 +70,23 @@ export default function Navbar({ user, setUser }) {
         <div className="flex items-center gap-4">
           {user ? (
             <>
-              <span className="text-gray-700">Hi, {user.username}</span>
-              <Link to="/kniffel" className="text-blue-600">
+              <span className="text-gray-700 dark:text-gray-300">Hi, {user.username}</span>
+              <Link to="/kniffel" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500">
                 Play
               </Link>
-              <Link to="/dashboard" className="text-blue-600">
+              <Link to="/dashboard" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500">
                 Dashboard
               </Link>
-              <Link to="/rules" className="text-blue-600">
+              <Link to="/rules" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500">
                 Rules
               </Link>
 
-              <button onClick={handleLogout} className="text-red-600">
+              <button onClick={handleLogout} className="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600">
                 Logout
               </button>
               <button
                 onClick={handleDeleteAccount}
-                className="text-red-600 rounded-md inline-flex flex-col items-center justify-center"
+                className="text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-600 rounded-md inline-flex flex-col items-center justify-center"
                 style={{
                   padding: ".25rem .5rem",
                   fontSize: ".75rem",
@@ -104,10 +104,10 @@ export default function Navbar({ user, setUser }) {
             </>
           ) : (
             <>
-              <Link to="/login" className="text-blue-600">
+              <Link to="/login" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500">
                 Login
               </Link>
-              <Link to="/register" className="text-blue-600">
+              <Link to="/register" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500">
                 Register
               </Link>
             </>

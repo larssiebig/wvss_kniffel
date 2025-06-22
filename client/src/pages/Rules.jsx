@@ -4,8 +4,8 @@ import React from "react";
 
 export default function Rules() {
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4 bg-white rounded-lg shadow">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+    <div className="max-w-3xl mx-auto py-8 px-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow">
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
         🎲 Kniffel Game Rules
       </h1>
 
@@ -41,43 +41,43 @@ export default function Rules() {
         <div className="overflow-x-auto">
           <table className="min-w-full text-left border border-gray-200 text-sm">
             <thead>
-              <tr className="bg-gray-100">
-                <th className="px-4 py-2 font-semibold text-gray-700">Category</th>
-                <th className="px-4 py-2 font-semibold text-gray-700">Description / Points</th>
+              <tr className="bg-gray-100 dark:bg-gray-700">
+                <th className="px-4 py-2 font-semibold text-gray-700 dark:text-gray-100">Category</th>
+                <th className="px-4 py-2 font-semibold text-gray-700 dark:text-gray-100">Description / Points</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
               <tr>
-                <td className="px-4 py-2">Ones – Sixes</td>
-                <td className="px-4 py-2">Sum of dice showing that number</td>
+                <td className="px-4 py-2 dark:text-gray-100">Ones – Sixes</td>
+                <td className="px-4 py-2 dark:text-gray-100">Sum of dice showing that number</td>
               </tr>
               <tr>
-                <td className="px-4 py-2">Three of a Kind</td>
-                <td className="px-4 py-2">At least 3 of the same – sum of all dice</td>
+                <td className="px-4 py-2 dark:text-gray-100">Three of a Kind</td>
+                <td className="px-4 py-2 dark:text-gray-100">At least 3 of the same – sum of all dice</td>
               </tr>
               <tr>
-                <td className="px-4 py-2">Four of a Kind</td>
-                <td className="px-4 py-2">At least 4 of the same – sum of all dice</td>
+                <td className="px-4 py-2 dark:text-gray-100">Four of a Kind</td>
+                <td className="px-4 py-2 dark:text-gray-100">At least 4 of the same – sum of all dice</td>
               </tr>
               <tr>
-                <td className="px-4 py-2">Full House</td>
-                <td className="px-4 py-2">Three of a kind + a pair – 25 points</td>
+                <td className="px-4 py-2 dark:text-gray-100">Full House</td>
+                <td className="px-4 py-2 dark:text-gray-100">Three of a kind + a pair – 25 points</td>
               </tr>
               <tr>
-                <td className="px-4 py-2">Small Straight</td>
-                <td className="px-4 py-2">Sequence of 4 (e.g. 1-2-3-4) – 30 points</td>
+                <td className="px-4 py-2 dark:text-gray-100">Small Straight</td>
+                <td className="px-4 py-2 dark:text-gray-100">Sequence of 4 (e.g. 1-2-3-4) – 30 points</td>
               </tr>
               <tr>
-                <td className="px-4 py-2">Large Straight</td>
-                <td className="px-4 py-2">Sequence of 5 (e.g. 2-3-4-5-6) – 40 points</td>
+                <td className="px-4 py-2 dark:text-gray-100">Large Straight</td>
+                <td className="px-4 py-2 dark:text-gray-100">Sequence of 5 (e.g. 2-3-4-5-6) – 40 points</td>
               </tr>
               <tr>
-                <td className="px-4 py-2">Kniffel</td>
-                <td className="px-4 py-2">All 5 dice the same – 50 points</td>
+                <td className="px-4 py-2 dark:text-gray-100">Kniffel</td>
+                <td className="px-4 py-2 dark:text-gray-100">All 5 dice the same – 50 points</td>
               </tr>
               <tr>
-                <td className="px-4 py-2">Chance</td>
-                <td className="px-4 py-2">Sum of all dice – no restrictions</td>
+                <td className="px-4 py-2 dark:text-gray-100">Chance</td>
+                <td className="px-4 py-2 dark:text-gray-100">Sum of all dice – no restrictions</td>
               </tr>
             </tbody>
           </table>
