@@ -1,10 +1,16 @@
+// client/src/pages/Dashboard.jsx
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Dashboard({ user }) {
   const [highscores, setHighscores] = useState([]);
   const [myScores, setMyScores] = useState([]);
+  const [myHistory, setMyHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [loadingHistory, setLoadingHistory] = useState(false);
 
+  // Load top global highscores from backend
   const loadHighscores = () => {
     axios
       .get(
@@ -15,6 +21,7 @@ export default function Dashboard({ user }) {
       .catch((error) => console.error("Failed to load highscores:", error));
   }
 
+  // Load personal top scores for current user
   const loadMyScores = () => {
     axios
       .get(
@@ -25,6 +32,31 @@ export default function Dashboard({ user }) {
       .catch((error) => console.error("Failed to load my scores:", error));
   }
 
+  // Load detailed game history if not already loaded
+  const loadMyHistory = async () => {
+    if(myHistory.length === 0) {
+      setLoadingHistory(true);
+
+      try {
+        const res = await axios.get("http://localhost:3001/api/my-history", {
+          withCredentials: true,
+        });
+        setMyHistory(res.data);
+      } catch (error) {
+        console.error("Failed to load game history:", error);
+      } finally {
+        setLoadingHistory(false);
+      }
+    }
+  }
+
+  // Toggle showing the game history panel
+  const toggleHistory = async () => {
+    if(!showHistory) await loadMyHistory();
+    setShowHistory((prev) => !prev);
+  }
+
+  // On mount or user change, load scores if logged in
   useEffect(() => {
     if (user) {
       loadHighscores();
@@ -32,6 +64,7 @@ export default function Dashboard({ user }) {
     }
   }, [user]);
 
+  // Show prompt if not logged in
   if (!user) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
@@ -40,6 +73,7 @@ export default function Dashboard({ user }) {
     );
   }
 
+  // Render dashboard with highscores, personal scores, and optional history
   return (
     <div className="min-h-screen w-screen bg-gray-100 flex flex-col items-center py-12 px-4">
       <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8">
@@ -58,6 +92,13 @@ export default function Dashboard({ user }) {
           >
             Refresh scores
           </button>
+
+          <button
+              onClick={toggleHistory}
+              className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition"
+            >
+              {showHistory ? "Hide Game History" : "Show Game History"}
+            </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -101,6 +142,29 @@ export default function Dashboard({ user }) {
               <p className="text-gray-500">No personal scores yet.</p>
             )}
           </div>
+
+          {showHistory && (
+            <div className="md:col-span-2">
+              <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                Your Game History
+              </h2>
+              {loadingHistory ? (
+                <p className="text-gray-500">Loading history...</p>
+              ) : myHistory.length > 0 ? (
+                <ul className="space-y-2 max-h-60 overflow-auto border rounded-md p-3 bg-white text-gray-800">
+                  {myHistory.map((entry, i) => (
+                    <li key={i} className="border-b py-1 last:border-b-0">
+                      <strong>Date:</strong>{" "}
+                      {new Date(entry.date).toLocaleString()} -{" "}
+                      <strong>Score:</strong> {entry.value}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-500">No game history available.</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

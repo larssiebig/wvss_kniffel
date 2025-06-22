@@ -1,3 +1,5 @@
+// client/src/pages/Register.jsx
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +12,7 @@ export default function Register({ user, setUser }) {
   const [modalMessage, setModalMessage] = useState(null);
   const navigate = useNavigate();
 
+  // Redirect logged-in users to dashboard
   useEffect(() => {
     if (user) {
       navigate("/dashboard");
@@ -18,8 +21,15 @@ export default function Register({ user, setUser }) {
 
   const closeModal = () => setModalMessage(null);
 
+  // Handles registration form submission
   const handleRegister = async () => {
+    if(!username || !password) {
+      setModalMessage("Please enter username and password.");
+      return;
+    }
+
     try {
+      // Send registration request to backend
       const res = await axios.post(
         "http://localhost:3001/api/register",
         { username, password },
@@ -35,10 +45,14 @@ export default function Register({ user, setUser }) {
       } else {
         setModalMessage("Registration failed. Please try again.");
       }
-    } catch {
-      setModalMessage("Registration failed.");
+    } catch (error) {
+      if(error.response?.data?.message) {
+        setModalMessage(`Error: ${error.response.data.message}`);
+      } else {
+        setModalMessage("Registration failed. Please try again.");
+      }
     }
-  };
+  }
 
   return (
     <>
