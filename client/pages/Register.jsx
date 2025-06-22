@@ -48,6 +48,8 @@ export default function Register({ user, setUser }) {
         password={password}
         setUsername={setUsername}
         setPassword={setPassword}
+        onSubmit={handleRegister}
+        buttonText="Register"
       />
 
       <Modal message={modalMessage} onClose={closeModal} />

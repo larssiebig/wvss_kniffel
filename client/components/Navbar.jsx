@@ -37,7 +37,7 @@ export default function Navbar({ user, setUser }) {
 
       // log out after deletion
       await handleLogout();
-      alert("Your account has been deleted successfully.");
+      setModalMessage("Your account has been deleted successfully.");
     } catch (error) {
       console.error("Error deleting account:", error);
       setModalMessage("There was an error deleting your account. Please try again later.");

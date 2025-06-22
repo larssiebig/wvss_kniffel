@@ -76,7 +76,7 @@ app.get("/api/user", async (req, res) => {
   const user = await prisma.user.findUnique({
     where: { id: req.session.userId },
   });
-  res.json({ username: user.username });
+  res.json({ id: user.id, username: user.username });
 });
 
 // SAVE SCORE
