@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Modal from "../components/Modal";
 
 export default function Dashboard({ user }) {
   const [highscores, setHighscores] = useState([]);
@@ -9,6 +10,7 @@ export default function Dashboard({ user }) {
   const [myHistory, setMyHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [modalMessage, setModalMessage] = useState(null);
 
   // Load top global highscores from backend
   const loadHighscores = () => {
@@ -18,7 +20,10 @@ export default function Dashboard({ user }) {
         { withCredentials: true }
       )
       .then((res) => setHighscores(res.data))
-      .catch((error) => console.error("Failed to load highscores:", error));
+      .catch((error) => {
+        const message = error.response?.data?.error || "Failed to load highscores.";
+        setModalMessage(message);
+      });
   }
 
   // Load personal top scores for current user
@@ -29,7 +34,10 @@ export default function Dashboard({ user }) {
         { withCredentials: true }
       )
       .then((res) => setMyScores(res.data))
-      .catch((error) => console.error("Failed to load my scores:", error));
+      .catch((error) => {
+        const message = error.response?.data?.error || "Failed to load your scores.";
+        setModalMessage(message);
+      });
   }
 
   // Load detailed game history if not already loaded
@@ -43,7 +51,8 @@ export default function Dashboard({ user }) {
         });
         setMyHistory(res.data);
       } catch (error) {
-        console.error("Failed to load game history:", error);
+        const message = error.response?.data?.error || "Failed to load game history.";
+        setModalMessage(message);
       } finally {
         setLoadingHistory(false);
       }
@@ -75,7 +84,7 @@ export default function Dashboard({ user }) {
 
   // Render dashboard with highscores, personal scores, and optional history
   return (
-    <div className="min-h-screen w-screen bg-gray-100 flex flex-col items-center py-12 px-4">
+    <><div className="min-h-screen w-screen bg-gray-100 flex flex-col items-center py-12 px-4">
       <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8">
 
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
@@ -87,18 +96,18 @@ export default function Dashboard({ user }) {
             onClick={() => {
               loadHighscores();
               loadMyScores();
-            }}
+            } }
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition"
           >
             Refresh scores
           </button>
 
           <button
-              onClick={toggleHistory}
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition"
-            >
-              {showHistory ? "Hide Game History" : "Show Game History"}
-            </button>
+            onClick={toggleHistory}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition"
+          >
+            {showHistory ? "Hide Game History" : "Show Game History"}
+          </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -168,5 +177,7 @@ export default function Dashboard({ user }) {
         </div>
       </div>
     </div>
+      <Modal message={modalMessage} onClose={() => setModalMessage(null)} />
+    </>
   );
 }
