@@ -12,7 +12,7 @@ export default function Dashboard({ user }) {
         { value: score },
         { withCredentials: true }
       )
-      .then(() => alert("Score gespeichert"));
+      .then(() => alert("Score saved."));
   };
 
   const loadHighscores = () => {
@@ -23,7 +23,7 @@ export default function Dashboard({ user }) {
   if (!user) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-xl text-gray-700">Bitte einloggen...</p>
+        <p className="text-xl text-gray-700">Please log in...</p>
       </div>
     );
   }
@@ -32,7 +32,7 @@ export default function Dashboard({ user }) {
     <div className="min-h-screen w-screen bg-gray-100 flex flex-col items-center py-12 px-4">
       <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
-          Hallo, {user.username}
+          Hello, {user.username}
         </h1>
 
         <div className="mb-6 text-black">
@@ -52,13 +52,13 @@ export default function Dashboard({ user }) {
             onClick={saveScore}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition"
           >
-            Score speichern
+            Save score
           </button>
           <button
             onClick={loadHighscores}
             className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition"
           >
-            Highscores laden
+            Load highscores
           </button>
         </div>
 
@@ -78,7 +78,7 @@ export default function Dashboard({ user }) {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500">Keine Highscores geladen.</p>
+            <p className="text-gray-500">No highscores loaded.</p>
           )}
         </div>
       </div>
