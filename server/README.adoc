@@ -19,6 +19,12 @@ Install dependencies:
 [source,bash]
 ----
 npm install
+----
+
+Start the server:
+
+[source,bash]
+----
 node index.js
 ----
 

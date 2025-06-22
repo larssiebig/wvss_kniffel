@@ -10,9 +10,9 @@ import { Outlet } from "react-router-dom";
 
 export default function Layout({ user }) {
   return (
-    <div className="w-screen min-h-screen bg-gray-100 text-black">
+    <div className="min-h-screen w-full bg-gray-100 text-black dark:bg-gray-900 dark:text-white flex flex-col">
       <Navbar user={user} />
-      <div className="p-4">
+      <div className="flex-grow p-6 max-w-7xl mx-auto w-full">
         <Outlet />
       </div>
     </div>

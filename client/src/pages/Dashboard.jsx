@@ -84,10 +84,10 @@ export default function Dashboard({ user }) {
 
   // Render dashboard with highscores, personal scores, and optional history
   return (
-    <><div className="min-h-screen w-screen bg-gray-100 flex flex-col items-center py-12 px-4">
-      <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8">
+    <><div className="min-h-screen w-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center py-12 px-4">
+      <div className="w-full max-w-2xl bg-white dark:bg-gray-800 shadow-xl dark:shadow-lg rounded-2xl p-8">
 
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
           Hello, {user.username}
         </h1>
 
@@ -113,7 +113,7 @@ export default function Dashboard({ user }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
           <div>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
               Top 10 Highscores
             </h2>
             {highscores.length > 0 ? (
@@ -121,19 +121,19 @@ export default function Dashboard({ user }) {
                 {highscores.map((entry, i) => (
                   <li
                     key={i}
-                    className="bg-gray-50 border rounded-md p-3 shadow-sm text-gray-800"
+                    className="bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md p-3 shadow-sm text-gray-800 dark:text-white"
                   >
                     {entry.user.username}: {entry.value}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-gray-500">No highscores available.</p>
+              <p className="text-gray-500 dark:text-gray-400">No highscores available.</p>
             )}
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
               Your top scores
             </h2>
             {myScores.length > 0 ? (
@@ -141,28 +141,28 @@ export default function Dashboard({ user }) {
                 {myScores.map((entry, i) => (
                   <li
                     key={i}
-                    className="bg-gray-50 border rounded-md p-3 shadow-sm text-gray-800"
+                    className="bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md p-3 shadow-sm text-gray-800 dark:text-white"
                   >
                     {entry.value}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-gray-500">No personal scores yet.</p>
+              <p className="text-gray-500 dark:text-gray-400">No personal scores yet.</p>
             )}
           </div>
 
           {showHistory && (
             <div className="md:col-span-2">
-              <h2 className="text-xl font-semibold text-gray-700 mb-4">
+              <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
                 Your Game History
               </h2>
               {loadingHistory ? (
-                <p className="text-gray-500">Loading history...</p>
+                <p className="text-gray-500 dark:text-gray-400">Loading history...</p>
               ) : myHistory.length > 0 ? (
-                <ul className="space-y-2 max-h-60 overflow-auto border rounded-md p-3 bg-white text-gray-800">
+                <ul className="space-y-2 max-h-60 overflow-auto border rounded-md p-3 bg-white dark:bg-gray-800 text-gray-800 dark:text-white dark:border-gray-600">
                   {myHistory.map((entry, i) => (
-                    <li key={i} className="border-b py-1 last:border-b-0">
+                    <li key={i} className="border-b dark:border-gray-600 py-1 last:border-b-0">
                       <strong>Date:</strong>{" "}
                       {new Date(entry.date).toLocaleString()} -{" "}
                       <strong>Score:</strong> {entry.value}
@@ -170,7 +170,7 @@ export default function Dashboard({ user }) {
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">No game history available.</p>
+                <p className="text-gray-500 dark:text-gray-400">No game history available.</p>
               )}
             </div>
           )}
