@@ -44,7 +44,7 @@ export default function App() {
       <Routes>
         {/* Public routes: only if not logged in */}
         {!user && <Route path="/login" element={<Login user={user} setUser={setUser} />} />}
-        {!user && <Route path="/register" element={<Register />} />}
+        {!user && <Route path="/register" element={<Register user={user} setUser={setUser} />} />}
 
         {/* Redirect if trying to access /login or /register when already logged in */}
         {user && <Route path="/login" element={<Navigate to="/dashboard" />} />}
