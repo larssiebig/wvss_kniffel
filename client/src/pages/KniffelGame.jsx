@@ -10,15 +10,16 @@ function rollDie() {
 }
 
 export default function KniffelGame({ user }) {
-  const [dice, setDice] = useState(Array(5).fill(null));    // Current dice values
-  const [kept, setKept] = useState(Array(5).fill(false));   // Which dice are being kept
-  const [rollsLeft, setRollsLeft] = useState(3);            // Rolls left for the current turn
-  const [scores, setScores] = useState(                     // Score for each category
+  const [dice, setDice] = useState(Array(5).fill(null)); // Current dice values
+  const [kept, setKept] = useState(Array(5).fill(false)); // Which dice are being kept
+  const [rollsLeft, setRollsLeft] = useState(3); // Rolls left for the current turn
+  const [scores, setScores] = useState(
+    // Score for each category
     Object.fromEntries(categories.map((c) => [c, null]))
   );
 
-  const [successMessage, setSuccessMessage] = useState(null);   // Message after saving score
-  const [errorMessage, setErrorMessage] = useState(null);       // Message on error
+  const [successMessage, setSuccessMessage] = useState(null); // Message after saving score
+  const [errorMessage, setErrorMessage] = useState(null); // Message on error
 
   const isGameComplete = Object.values(scores).every((val) => val !== null);
 
@@ -30,18 +31,18 @@ export default function KniffelGame({ user }) {
     setScores(Object.fromEntries(categories.map((c) => [c, null])));
     setSuccessMessage(null);
     setErrorMessage(null);
-  }
+  };
 
   // Save score when game is complete
   useEffect(() => {
-    if(!isGameComplete) return;
+    if (!isGameComplete) return;
 
     const totalScore = Object.values(scores).reduce(
       (sum, val) => sum + (val ?? 0),
-      0,
+      0
     );
 
-    if(user) {
+    if (user) {
       axios
         .post(
           "http://localhost:3001/api/score",
@@ -66,7 +67,7 @@ export default function KniffelGame({ user }) {
     const newKept = [...kept];
     newKept[index] = !newKept[index];
     setKept(newKept);
-  }
+  };
 
   // Rolls all non-kept dice
   const rollDice = () => {
@@ -74,7 +75,7 @@ export default function KniffelGame({ user }) {
     const newDice = dice.map((d, i) => (kept[i] && d !== null ? d : rollDie()));
     setDice(newDice);
     setRollsLeft(rollsLeft - 1);
-  }
+  };
 
   // Applies score to a selected category and resets turn
   const scoreCategory = (category) => {
@@ -82,15 +83,12 @@ export default function KniffelGame({ user }) {
 
     const newScores = { ...scores };
     newScores[category] = calculateScore(category, dice);
-<<<<<<< HEAD
-=======
     // Reset turn
->>>>>>> 883c5da4a5ac47010dee3518a9bfe405146adfcc
     setScores(newScores);
     setDice(Array(5).fill(null));
     setKept(Array(5).fill(false));
     setRollsLeft(3);
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-8 w-screen text-white">
@@ -128,9 +126,9 @@ export default function KniffelGame({ user }) {
       <div className="flex justify-center gap-4 mb-6">
         {!isGameComplete && (
           <button
-          onClick={rollDice}
-          disabled={rollsLeft === 0}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+            onClick={rollDice}
+            disabled={rollsLeft === 0}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
           >
             Roll Dice ({rollsLeft} left)
           </button>
@@ -140,13 +138,13 @@ export default function KniffelGame({ user }) {
           style={
             isGameComplete
               ? {
-                backgroundColor: "#ef4444",
-                color: "white",
-              }
+                  backgroundColor: "#ef4444",
+                  color: "white",
+                }
               : {
-                backgroundColor: "#fdc9c9",
-                color: "#242424",
-              }
+                  backgroundColor: "#fdc9c9",
+                  color: "#242424",
+                }
           }
           className="px-4 py-2 rounded font-semibold transition-colors duration-200"
         >
@@ -155,31 +153,6 @@ export default function KniffelGame({ user }) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
-<<<<<<< HEAD
-        {categories.map((cat) => {
-          const isChosen = scores[cat] !== null;
-          const isPreview = !isChosen && dice.every((d) => d !== null);
-          const previewScore = isPreview ? calculateScore(cat, dice) : "-";
-
-          return (
-            <button
-              key={cat}
-              disabled={isChosen}
-              onClick={() => scoreCategory(cat)}
-              className={`p-2 border rounded text-left transition-colors duration-200 ${
-                isChosen
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-white hover:bg-gray-100"
-              }`}
-            >
-              {cat}:{" "}
-              <span className={isPreview ? "text-gray-400" : ""}>
-                {isChosen ? scores[cat] : previewScore}
-              </span>
-            </button>
-          );
-        })}
-=======
         {categories.map((cat) => (
           <button
             key={cat}
@@ -194,7 +167,6 @@ export default function KniffelGame({ user }) {
             {cat}: {scores[cat] ?? "-"}
           </button>
         ))}
->>>>>>> 9c6f2dadc7c253023d2fae972b149a2859073635
       </div>
 
       {isGameComplete && (
