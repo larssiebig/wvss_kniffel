@@ -106,7 +106,7 @@ app.get("/api/highscores", async (req, res) => {
   }
 });
 
-// GET OWN SCORES
+// GET OWN TOP SCORES
 app.get("/api/my-scores", async (req, res) => {
   if(!req.session.userId)
     return res.status(401).json({ error: "Not logged in" });
@@ -123,6 +123,23 @@ app.get("/api/my-scores", async (req, res) => {
     res.status(500).json({ error: "Internal server error", details: error.message });
   }
 })
+
+// GET FULL HISTORY for logged-in user
+app.get("/api/my-history", async (req, res) => {
+  if (!req.session.userId)
+    return res.status(401).json({ error: "Not logged in" });
+
+  try {
+    const history = await prisma.score.findMany({
+      where: { userId: req.session.userId },
+      orderBy: { date: "desc" },
+    });
+    res.json(history);
+  } catch (error) {
+    console.error("Error loading game history:", error);
+    res.status(500).json({ error: "Internal server error", details: error.message});
+  }
+});
 
 // DELETE USER (including scores)
 app.delete("/api/user/:id", async (req, res) => {

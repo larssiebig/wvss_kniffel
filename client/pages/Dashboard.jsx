@@ -4,6 +4,8 @@ import axios from "axios";
 export default function Dashboard({ user }) {
   const [highscores, setHighscores] = useState([]);
   const [myScores, setMyScores] = useState([]);
+  const [myHistory, setMyHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
   const loadHighscores = () => {
     axios
@@ -23,6 +25,24 @@ export default function Dashboard({ user }) {
       )
       .then((res) => setMyScores(res.data))
       .catch((error) => console.error("Failed to load my scores:", error));
+  }
+
+  const loadMyHistory = async () => {
+    if(myHistory.length === 0) {
+      try {
+        const res = await axios.get("http://localhost:3001/api/my-history", {
+          withCredentials: true,
+        });
+        setMyHistory(res.data);
+      } catch (error) {
+        console.error("Failed  to load game history:", error);
+      }
+    }
+  }
+
+  const toggleHistory = async () => {
+    if(!showHistory) await loadMyHistory();
+    setShowHistory((prev) => !prev);
   }
 
   useEffect(() => {
@@ -58,6 +78,13 @@ export default function Dashboard({ user }) {
           >
             Refresh scores
           </button>
+
+          <button
+              onClick={toggleHistory}
+              className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition"
+            >
+              {showHistory ? "Hide Game History" : "Show Game History"}
+            </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -101,6 +128,30 @@ export default function Dashboard({ user }) {
               <p className="text-gray-500">No personal scores yet.</p>
             )}
           </div>
+
+          {showHistory && (
+            <div className="md:col-span-2">
+              <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                Your Game History
+              </h2>
+              {myHistory.length > 0 ? (
+                <ul className="space-y-2 max-h-60 overflow-auto border rounded-md p-3 bg-white text-gray-800">
+                  {myHistory.map((entry, i) => (
+                    <li
+                      key={i}
+                      className="border-b py-1 last:border-b-0"
+                    >
+                      <strong>Date:</strong>{" "}
+                      {new Date(entry.date).toLocaleString()} - {" "}
+                      <strong>Score:</strong> {entry.value}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-500">No game history available.</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
