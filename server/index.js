@@ -81,14 +81,22 @@ app.post("/api/score", async (req, res) => {
   res.json({ success: true });
 });
 
-// GET TOP 10 SCORES
+// GET TOP 10 SCORES (only with existing user)
 app.get("/api/highscores", async (req, res) => {
-  const scores = await prisma.score.findMany({
-    orderBy: { value: "desc" },
-    take: 10,
-    include: { user: true },
+  try {
+    const users = await prisma.user.findMany({ select: { id: true } });
+    const userIds = users.map(u => u.id);
+    const scores = await prisma.score.findMany({
+      where: { userId: { in: userIds } },
+      orderBy: { value: "desc" },
+      take: 10,
+      include: { user: true },
   });
   res.json(scores);
+  } catch (error) {
+    console.error("Error loading highscores:", error);
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
 });
 
 app.listen(PORT, () =>
