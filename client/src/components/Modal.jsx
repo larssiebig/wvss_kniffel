@@ -1,3 +1,8 @@
+// client/src/components/Modal.jsx
+
+// Modal dialog component that displays a message with an OKAY button.
+// Clicking outside the modal or on the OKAY button closes the modal.
+
 export default function Modal({ message, onClose }) {
   if(!message) return null;
 

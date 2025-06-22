@@ -1,3 +1,9 @@
+// client/eslint.config.js
+
+// ESLint configuration for the frontend project, enabling JavaScript and JSX linting,
+// React hooks rules enforcement, and React refresh plugin for better HMR (Hot Module Replacement) experience.
+// It ignores the 'dist' folder and defines rules for unused variables and component exports.
+
 import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'

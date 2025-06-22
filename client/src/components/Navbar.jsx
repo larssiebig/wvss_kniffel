@@ -1,3 +1,5 @@
+// client/src/components/Navbar.jsx
+
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
@@ -9,6 +11,7 @@ export default function Navbar({ user, setUser }) {
 
   const closeModal = () => setModalMessage(null);
 
+  // Logs out the user by calling backend logout endpoint, resets user state, and navigates home.
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -21,8 +24,9 @@ export default function Navbar({ user, setUser }) {
     } catch (error) {
       setModalMessage("Error logging out. Please try again later.");
     }
-  };
+  }
 
+  // Deletes the user account after confirmation, logs out, and shows success or error modal.
   const handleDeleteAccount = async () => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete your account? This action cannot be undone."
@@ -30,13 +34,14 @@ export default function Navbar({ user, setUser }) {
     if(!confirmDelete) return;
 
     try {
-      // delete account
+      // delete account on backend
       await axios.delete(`http://localhost:3001/api/user/${user.id}`, {
         withCredentials: true,
       });
 
-      // log out after deletion
+      // Log out after deletion
       await handleLogout();
+
       setModalMessage("Your account has been deleted successfully.");
     } catch (error) {
       console.error("Error deleting account:", error);
@@ -63,10 +68,7 @@ export default function Navbar({ user, setUser }) {
               <Link to="/dashboard" className="text-blue-600">
                 Dashboard
               </Link>
-              <button
-                onClick={handleLogout}
-                className="text-red-600"
-              >
+              <button onClick={handleLogout} className="text-red-600">
                 Logout
               </button>
               <button

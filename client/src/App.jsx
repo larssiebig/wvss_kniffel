@@ -1,3 +1,5 @@
+// client/src/App.jsx
+
 import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
@@ -6,14 +8,16 @@ import {
   Navigate,
 } from "react-router-dom";
 import axios from "axios";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Dashboard from "../pages/Dashboard";
-import KniffelGame from "../pages/KniffelGame";
-import Home from "../pages/Home";
-import Navbar from "../components/Navbar";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import KniffelGame from "./pages/KniffelGame";
+import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
 
+// Layout component wraps each page with shared UI components like Navbar.
+// Outlet is where the nested route components will be rendered.
 function Layout({ user, setUser }) {
   return (
     <div className="w-screen min-h-screen bg-gray-100 text-black">
@@ -25,10 +29,12 @@ function Layout({ user, setUser }) {
   );
 }
 
+// Main App component sets up routing and manages global user state.
 export default function App() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // wait for user fetch
+  const [user, setUser] = useState(null);         // Holds authenticated user data
+  const [loading, setLoading] = useState(true);   // True until user fetch completes
 
+  // On mount: fetch user data from backend to check if logged in
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/user", { withCredentials: true })
