@@ -46,8 +46,8 @@ export default function Register({ user, setUser }) {
         setModalMessage("Registration failed. Please try again.");
       }
     } catch (error) {
-      if(error.response?.data?.message) {
-        setModalMessage(`Error: ${error.response.data.message}`);
+      if(error.response?.data?.error) {
+        setModalMessage(`Error: ${error.response.data.error}`);
       } else {
         setModalMessage("Registration failed. Please try again.");
       }

@@ -68,3 +68,21 @@ export function hasStraight(counts, length) {
   }
   return patterns[length].some((p) => binary.includes(p));
 }
+
+// Calculates the sum of the upper section (Ones–Sixes) for the current scores.
+// Used to determine if the bonus is achieved.
+export function upperSectionSum(scores) {
+  return (
+    (scores.Ones ?? 0) +
+    (scores.Twos ?? 0) +
+    (scores.Threes ?? 0) +
+    (scores.Fours ?? 0) +
+    (scores.Fives ?? 0) +
+    (scores.Sixes ?? 0)
+  );
+}
+
+// Returns true if the upper section sum is 63 or more, which qualifies for the bonus.
+export function hasBonus(scores) {
+  return upperSectionSum(scores) >= 63; // Bonus if upper section total is 63 or more
+}
