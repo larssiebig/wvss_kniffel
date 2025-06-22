@@ -49,7 +49,14 @@ app.post("/api/login", async (req, res) => {
   const user = await prisma.user.findUnique({ where: { username } });
   if (user && (await bcrypt.compare(password, user.password))) {
     req.session.userId = user.id;
-    res.json({ success: true });
+
+    req.session.save((error) => {
+      if(error) {
+        console.error("Session save error:", error);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    })
+    res.json({ success: true, user: { id: user.id, username: user.username } });
   } else {
     res.status(401).json({ error: "Invalid credentials" });
   }
