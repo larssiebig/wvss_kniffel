@@ -45,6 +45,21 @@ Never commit your `.env` file to version control.
 Keep `SESSION_SECRET` long and secure (use a password generator).
 ====
 
+=== Database Setup
+
+To initialize the database, run the following Prisma migration command:
+
+[source,bash]
+----
+npx prisma migrate dev --name init
+----
+
+This will:
+
+* Create the database file (`prisma/dev.db`) based on the `schema.prisma` definition
+* Apply all migrations in the `prisma/migrations/` folder
+* Automatically generate the Prisma Client
+
 == 🧠 Tech Stack
 
 * Express.js — Web framework
