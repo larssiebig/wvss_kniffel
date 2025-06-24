@@ -144,7 +144,7 @@ export default function Dashboard({ user }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
               Your Statistics
             </h2>
             {myStats ? (
@@ -158,7 +158,7 @@ export default function Dashboard({ user }) {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
               Global Statistics
             </h2>
             {globalStats ? (
