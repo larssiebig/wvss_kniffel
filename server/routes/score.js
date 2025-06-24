@@ -71,7 +71,7 @@ router.get("/global-stats", asyncHandler(async (req, res) => {
     : 0;
 
   res.json({
-    gamesPlayed: scores-this.length,
+    gamesPlayed: scores.length,
     avgScore,
   });
 }));
