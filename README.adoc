@@ -103,3 +103,35 @@ See xref:client/README.adoc[Kniffel Frontend] and xref:server/README.adoc[Kniffe
 | Kniffel              | All 5 dice the same – *50 points*
 | Chance               | Sum of all dice – no restrictions
 |===
+
+== 📽 Project Presentation
+
+A project presentation built with xref:https://revealjs.com/[reveal.js] is included in the `presentation/` folder.
+
+=== How to view the presentation
+
+. Install dependencies (only needed once):
++
+[source,bash]
+----
+cd presentation
+npm install
+----
+. Start a local web server in the `presentation/` folder:
++
+[source,bash]
+----
+npx serve .
+----
+. Open your browser at `http://localhost:5000` (or the port shown in the terminal).
+
+The presentation is located in `presentation/index.html` and covers:
+
+* Project goals and requirements
+* Technical overview (frontend, backend, database)
+* Project structure
+* Key code snippets (React, Express, Scoring logic)
+* Screenshots and demo
+* Team roles and reflection
+
+You can use the arrow keys to navigate through the slides.

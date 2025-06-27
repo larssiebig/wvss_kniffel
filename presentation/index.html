@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kniffel</title>
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/black.css">
+  <link rel="icon" href="assets/" type="image/x-icon">
+  <link rel="stylesheet" href="plugin/highlight/monokai.css">
+  <style>
+    .reveal .slides section .fragment.highlight-current-red.current-fragment {
+      color: #ff6b6b;
+    }
+    .tech-stack {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 20px 0;
+    }
+    .tech-item {
+      text-align: center;
+      margin: 0 10px;
+    }
+    .game-rules {
+      font-size: 0.8em;
+      text-align: left;
+    }
+    .architecture-diagram {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+    .layer {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 0 10px;
+      flex: 1;
+    }
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+    .checklist li::before {
+      content: "✔ ";
+      color: #4caf50;
+      font-weight: bold;
+    }
+    .challenge-solution {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .challenge-solution > div {
+      flex: 1 1 300px;
+      min-width: 250px;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+      <!-- Title Slide -->
+      <section>
+        <h1>🎲 Kniffel Web-App</h1>
+        <h3>Online Würfelspiel mit Registrierung & Highscore</h3>
+        <p>
+          <small>Entwickelt von: Camille, Lars & Lukas</small>
+        </p>
+      </section>
+
+      <!-- Projektziel -->
+      <section>
+        <h2>🎯 Projektziel</h2>
+        <ul>
+          <li class="fragment">Kniffel als Web-App spielbar</li>
+          <li class="fragment">Registrierung & Login</li>
+          <li class="fragment">Alle Kniffel-Regeln integriert</li>
+          <li class="fragment">Highscore (Top 10)</li>
+          <li class="fragment">Responsive für alle Geräte</li>
+        </ul>
+      </section>
+
+      <!-- Muss-Kriterien Checkliste -->
+      <section>
+        <h2>✅ Muss-Kriterien</h2>
+        <ul class="checklist">
+          <li>Registrierung & Login/Logout</li>
+          <li>Kniffel-Spiel mit 5 Würfeln, 3 Würfen, Würfel halten</li>
+          <li>Automatische Punktevergabe & Kategorien</li>
+          <li>Spielstand speichern & Highscore-Liste</li>
+          <li>Eigene Spielhistorie</li>
+        </ul>
+      </section>
+
+      <!-- Kniffel-Regeln -->
+      <section>
+        <h2>🎲 Kniffel-Regeln (Überblick)</h2>
+        <ul>
+          <li>5 Würfel, bis zu 3 Würfe pro Runde</li>
+          <li>Nach jedem Wurf beliebige Würfel halten</li>
+          <li>Am Ende jeder Runde: Kategorie wählen und Punkte eintragen</li>
+          <li>Obere Hälfte: Einser–Sechser, Bonus ab 63 Punkten (+35)</li>
+          <li>Untere Hälfte: Dreierpasch, Viererpasch, Full House, Kleine/Große Straße, Kniffel, Chance</li>
+          <li>Alle Felder belegt = Spielende, höchste Punktzahl gewinnt</li>
+        </ul>
+      </section>
+
+      <!-- Technikübersicht -->
+      <section>
+        <h2>⚙ Technikübersicht</h2>
+        <div class="architecture-diagram">
+          <div class="layer fragment">
+            <h4>Frontend</h4>
+            <ul>
+              <li>React + Vite</li>
+              <li>Tailwind CSS</li>
+              <li>JavaScript ES6+</li>
+            </ul>
+          </div>
+          <div class="layer fragment">
+            <h4>Backend</h4>
+            <ul>
+              <li>Node.js + Express</li>
+              <li>Session-basierte Authentifizierung</li>
+              <li>RESTful API</li>
+            </ul>
+          </div>
+          <div class="layer fragment">
+            <h4>Datenbank</h4>
+            <ul>
+              <li>SQlite</li>
+              <li>Prisma ORM</li>
+              <li>Migrations</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projektstruktur -->
+      <section>
+        <section>
+          <h2>📁 Projektstruktur</h2>
+          <p>Klare Trennung zwischen Frontend und Backend</p>
+        </section>
+
+        <section>
+          <h3>Backend Struktur</h3>
+          <pre><code data-trim>
+server/
+├── lib/
+│   └── prisma.js                 # Prisma Client instance
+├── middleware/
+│   ├── auth.js                   # Session-based auth middleware
+│   └── errorHandler.js           # Global error handling middleware
+├── prisma/
+│   ├── dev.db                    # SQLite development database
+│   ├── schema.prisma             # Prisma schema definition
+│   └── migrations/
+│       ├── migration_lock.toml   # Prisma migration lock file
+│       └── 20250526061148_init/
+│           └── migration.sql     # SQL definition of initial migration
+├── routes/
+│   ├── auth.js                   # Routes for registration, login, logout
+│   ├── score.js                  # Routes for submitting and retrieving scores
+│   └── user.js                   # Routes for user info and deletion
+├── utils/
+│   ├── asyncHandler.js           # Wrapper for async route handlers
+│   └── errorMessages.js          # Centralized error messages
+├── .env                          # Environment variables (not committed)
+├── index.js                      # Application entry point
+└── README.adoc                   # Backend documentation (AsciiDoc)
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Frontend Struktur</h3>
+            <pre><code data-trim>
+              client/
+├── public/
+│   ├── dice-1.png ... dice-6.png # Dice images
+│   ├── images.jpg                # Favicon
+│   └── vite.svg                  # Static asset
+├── src/
+│   ├── assets/                   # Static assets (e.g. react.svg)
+│   ├── components/
+│   │   ├── AuthForm.jsx          # Auth form for login and register
+│   │   ├── Layout.jsx            # Layout with Navbar and page container
+│   │   ├── Modal.jsx             # Modal dialog component
+│   │   └── Navbar.jsx            # Navigation bar with auth links
+│   ├── pages/
+│   │   ├── Dashboard.jsx         # User dashboard and scores
+│   │   ├── Home.jsx              # Landing page
+│   │   ├── KniffelGame.jsx       # Kniffel game UI and logic
+│   │   ├── Login.jsx             # Login page and form
+│   │   ├── Register.jsx          # Registration page and form
+│   │   └── Rules.jsx             # Game rules and scoring overview
+│   ├── utils/
+│   │   └── score.js              # Kniffel scoring logic
+│   ├── App.css                   # Global app styles
+│   ├── App.jsx                   # Root app component and routing
+│   ├── index.css                 # Global base styles with Tailwind
+│   └── main.jsx                  # React entry point
+├── .gitignore                    # Git ignore rules
+├── eslint.config.js              # ESLint config for JS/React
+├── index.html                    # Main HTML template
+├── package.json                  # Project metadata and scripts
+├── README.adoc                   # Frontend documentation (AsciiDoc)
+└── vite.config.js                # Vite config with plugins
+            </code></pre>  
+        </section>
+      </section>
+
+      <!-- Screenshots -->
+      <section>
+        <h2>🖼️ Screenshots️</h2>
+        <p>Login, Spiel, Highscore, Dashboard</p>
+        <img src="login.png" alt="Login" style="max-width: 40%; margin: 1em;">
+        <img src="game.png" alt="Spiel" style="max-width: 40%; margin: 1em;">
+        <img src="highscore.png" alt="Highscore" style="max-width: 40%; margin: 1em;">
+        <!-- Weitere Screenshots ergänzen? -->
+      </section>
+
+      <!-- Code-Implementierung -->
+      <section>
+        <section>
+          <h2>💻 Code-Implementierung</h2>
+          <p>Detaillierter Blick auf die technische Umsetzung</p>
+        </section>
+
+        <section>
+          <h3>Scoring-Algorithmus</h3>
+          <pre><code data-trim>
+export function calculateScore(category, dice) {
+  const counts = [0, 0, 0, 0, 0, 0];
+  dice.forEach((d) => counts[d - 1]++);
+  
+  switch (category) {
+    case "Three of a Kind":
+      return counts.some((c) => c >= 3) ? sum(dice) : 0;
+    case "Full House":
+      return counts.includes(3) && counts.includes(2) ? 25 : 0;
+    case "Small Straight":
+      return hasStraight(counts, 4) ? 30 : 0;
+    case "Kniffel":
+      return counts.includes(5) ? 50 : 0;
+    // ...
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>React State Management</h3>
+          <pre><code data-trim>
+const [dice, setDice] = useState(Array(5).fill(null));
+const [kept, setKept] = useState(Array(5).fill(false));
+const [rollsLeft, setRollsLeft] = useState(3);
+const [scores, setScores] = useState(
+  Object.fromEntries(categories.map((c) => [c, null]))
+);
+
+const rollDice = () => {
+  if (rollsLeft === 0) return;
+  const newDice = dice.map((d, i) => 
+    (kept[i] && d !== null ? d : rollDie())
+  );
+  setDice(newDice);
+  setRollsLeft(rollsLeft - 1);
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Straßen-Erkennung</h3>
+          <pre><code data-trim>
+export function hasStraight(counts, length) {
+  const binary = counts.map((c) => (c > 0 ? 1 : 0)).join("");
+  const patterns = {
+    4: ["1111", "01111", "11110"], // Kleine Straße
+    5: ["11111"],                 // Große Straße
+  };
+  return patterns[length].some((p) => binary.includes(p));
+}          
+          </code></pre>
+          <p><small>Mustererkennung über Binär-String</small></p>
+        </section>
+      </section>
+
+      <!-- Frontend Features -->
+      <section>
+        <section>
+          <h2>⚛ Frontend Features</h2>
+          <p>React-basierte Benutzeroberfläche</p>
+        </section>
+
+        <section>
+          <h3>Game State Management</h3>
+          <pre><code data-trim>
+// Automatisches Spiel-Ende & Score-Upload
+useEffect(() => {
+  if (!isGameComplete) return;
+  
+  const upperSum = upperSectionSum(scores);
+  const bonus = hasBonus(scores) ? 35 : 0;
+  const totalScore = Object.values(scores)
+    .reduce((sum, val) => sum + (val ?? 0), 0) + bonus;
+  
+  if (user) {
+    axios.post("http://localhost:3001/api/score", 
+      { value: totalScore }, 
+      { withCredentials: true }
+    ).then(() => {
+      setSuccessMessage(`Score ${totalScore} saved!`);
+    });
+  }
+}, [isGameComplete, scores, user]);
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Interaktives Würfeln</h3>
+          <pre><code data-trim>
+const toggleKeep = (index) => {
+  const newKept = [...kept];
+  newKept[index] = !newKept[index];
+  setKept(newKept);
+};
+
+const rollDice = () => {
+  if (rollsLeft === 0) return;
+  const newDice = dice.map((d, i) => 
+    (kept[i] && d !== null ? d : rollDie())
+  );
+  setDice(newDice);
+  setRollsLeft(rollsLeft - 1);
+};
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Live Score Vorschau</h3>
+          <pre><code data-trim>
+&lt;div&gt;
+  &#123;categories.map((cat) =&gt; &#123;
+    const isChosen = scores[cat] !== null;
+    const allRolled = dice.every((d) =&gt; d !== null);
+    const previewScore = !isChosen &amp;&amp; allRolled 
+      ? calculateScore(cat, dice) : null;
+    
+    return (
+      &lt;button
+        key=&#123;cat&#125;
+        disabled=&#123;isChosen || !allRolled&#125;
+        onClick=&#123;() =&gt; scoreCategory(cat)&#125;
+      &gt;
+        &#123;cat&#125;: &#123;isChosen ? scores[cat] : previewScore ?? "-"&#125;
+      &lt;/button&gt;
+    );
+  &#125;)&#125;
+&lt;/div&gt;
+          </code></pre>
+        </section>
+      </section>
+
+      <!-- Backend API -->
+      <section>
+        <section>
+          <h2>🔌 Backend API</h2>
+          <p>Express.js Server mit SQLite & Prisma</p>
+        </section>
+
+        <section>
+          <h2>Session-basierte Authentifizierung</h2>
+          <pre><code data-trim>
+// server/routes/auth.js
+router.post("/login", asyncHandler(async (req, res) => {
+  const { username, password } = req.body;
+  const user = await prisma.user.findUnique({ where: { username } });
+  
+  if (user && await bcrypt.compare(password, user.password)) {
+    req.session.userId = user.id;
+    req.session.save(error => {
+      if(error) return res.status(500).json({ error: ERROR_MESSAGES.INTERNAL });
+      res.json({ success: true, user: { id: user.id, username: user.username } });
+    });
+  } else {
+    res.status(401).json({ error: ERROR_MESSAGES.INVALID_CREDENTIALS });
+  }
+}));
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Score Management</h3>
+          <pre><code data-trim>
+// server/routes/score.js
+// Submit new score
+router.post("/score", isAuthenticated, async (req, res) => {
+  const { value } = req.body;
+  await prisma.score.create({ 
+    data: { value, userId: req.session.userId } 
+  });
+  res.json({ success: true });
+});
+
+// Get top 10 highscores
+router.get("/highscores", async (req, res) => {
+  const scores = await prisma.score.findMany({
+    orderBy: { value: "desc" },
+    take: 10,
+    include: { user: true }
+  });
+  res.json(scores);
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Prisma Schema</h3>
+          <pre><code data-trim>
+model User {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  password String
+  scores   Score[]
+}
+
+model Score {
+  id     Int      @id @default(autoincrement())
+  value  Int
+  date   DateTime @default(now())
+  user   User     @relation(fields: [userId], references: [id])
+  userId Int
+}
+          </code></pre>                
+        </section>
+      </section>
+
+      <!-- Aufgabenverteilung -->
+      <section>
+        <h2>👥 Aufgabenverteilung</h2>
+        <div style="display: flex; justify-content: space-between;">
+          <div style="flex: 1; margin-right: 20px;">
+            <h4>Camille</h4>
+            <ul>
+              <li>Backend-Entwicklung</li>
+              <li>Datenbank-Design</li>
+              <li>API-Endpoints</li>
+              <li>Authentifizierung</li>
+            </ul>
+          </div>
+          <div style="flex: 1; margin-right: 20px;">
+            <h4>Lars</h4>
+            <ul>
+              <li>Frontend-Entwicklung</li>
+              <li>Spiellogik</li>
+              <li>React Components</li>
+              <li>UI/UX Design</li>
+            </ul>
+          </div>
+          <div style="flex: 1;">
+            <h4>Lukas</h4>
+            <ul>
+              <li>Testing & Debugging</li>
+              <li>Styling & Layout</li>
+              <li>Dokumentation</li>
+              <li>Deployment</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Demo -->
+      <section>
+        <h2>🚀 Live Demo</h2>
+        <h3>Funktionen in Aktion</h3>
+        <ol>
+          <li class="fragment">Benutzer registrieren</li>
+          <li class="fragment">Einloggen</li>
+          <li class="fragment">Kniffel spielen</li>
+          <li class="fragment">Score speichern</li>
+          <li class="fragment">Highscore anzeigen</li>
+          <li class="fragment">Eigene Spielhistorie ansehen</li>
+        </ol>
+      </section>
+
+      <!-- Herausforderungen & Lösungen -->
+      <section>
+        <h2>⚠ Herausforderungen & Lösungsansätze</h2>
+        <div class="challenge-solution">
+          <div>
+            <h3>Herausforderungen</h3>
+            <ul>
+              <li>Komplexe Muster-Erkennung für Straßen</li>
+              <li>State Management zwischen Würfeln, Kategorien und Scores</li>
+              <li>Session Handling & CORS</li>
+              <li>Würfel-Holding zwischen Würfen</li>
+              <li>User-Score Verknüpfung mit Prisma</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Lösungsansätze</h3>
+            <ul>
+              <li>Binär-Pattern Matching für Straßen</li>
+              <li>React useEffect für Score-Speichern</li>
+              <li>AsyncHandler für Error-Handling</li>
+              <li>Middleware-Chain für Auth</li>
+              <li>Preview-Scores für bessere UX</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reflexion -->
+      <section>
+        <section>
+          <h2>🤔 Reflexion</h2>
+        </section>
+        
+        <section>
+          <h3>✅ Was lief gut?</h3>
+          <ul>
+            <li class="fragment">Klare Aufgabenverteilung im Team</li>
+            <li class="fragment">Moderne Tech-Stack Wahl</li>
+            <li class="fragment">Strukturierte Entwicklung</li>
+            <li class="fragment">Alle Pflichtfunktionen implementiert</li>
+            <li class="fragment">Responsive Design erreicht</li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- Erweiterungen -->
+      <section>
+        <h3>🚀 Mögliche Erweiterungen</h3>
+        <ul>
+          <li class="fragment">Multiplayer-Funktionalität</li>
+          <li class="fragment">Erweiterte Statistiken</li>
+          <li class="fragment">Mobile App</li>
+          <li class="fragment">Verschiedene Spielvarianten</li>
+          <li class="fragment">Social Features</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+    });
+  </script>
+</body>
+</html>
