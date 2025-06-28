@@ -2,63 +2,52 @@
 :toc:
 :icons: font
 
-This project is a Node.js backend API using Express and Prisma for managing users and their game scores.
+Express-based API for managing user accounts and Kniffel scores.
+Uses Prisma and SQLite for persistence.
 
 == 🚀 Getting Started
 
 === Prerequisites
 
-* Node.js (v18 or later)
-* PostgreSQL or any Prisma-supported database
 * Frontend running at `http://localhost:5173` (or configured via `.env`)
+* See xref:../README.adoc#Setup Instructions[Kniffel Web-App Setup Instructions] for complete setup and environment variable examples.
 
-=== Installation
+=== Database Reset
 
-Install dependencies:
-
-[source,bash]
-----
-npm install
-----
-
-Start the server:
+To reset the local dev DB:
 
 [source,bash]
 ----
-node index.js
+npx prisma migrate reset
 ----
 
-=== Environment Variables
+=== Switching Database Provider
 
-Create a `.env` file in the `server/` directory with the following content:
+By default, SQLite is used for development.
+To use PostgreSQL:
 
+. Change the provider and url in `prisma/schema.prisma`:
++
+[source,prisma]
+----
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+----
+. Add `DATABASE_URL` to your `.env`:
++
 [source,env]
 ----
-PORT=3001
-SESSION_SECRET=supersecret
-FRONTEND_ORIGIN=http://localhost:5173
+DATABASE_URL=postgresql://user:password@localhost:5432/kniffel
 ----
 
-[WARNING]
-====
-Never commit your `.env` file to version control.  
-Keep `SESSION_SECRET` long and secure (use a password generator).
-====
-
-=== Database Setup
-
-To initialize the database, run the following Prisma migration command:
-
+. Run migrations:
++
 [source,bash]
 ----
-npx prisma migrate dev --name init
+npx prisma migrate dev
 ----
-
-This will:
-
-* Create the database file (`prisma/dev.db`) based on the `schema.prisma` definition
-* Apply all migrations in the `prisma/migrations/` folder
-* Automatically generate the Prisma Client
 
 == 🧠 Tech Stack
 
@@ -73,72 +62,26 @@ This will:
 
 == 🔐 Authentication
 
-The app uses session-based authentication.
-After registering or logging in, a session is stored and managed using cookies.
+Session-based login using cookies (`express-session`).  
+All authenticated routes require a valid session.
 
-== 📦 API Endpoints
+== 📦 API Overview
 
-=== `POST /api/register`
+[cols="1,1,3"]
+|===
+|Method |Endpoint          |Description
 
-Registers a new user and starts a session.
-
-[source,json]
-----
-{ "username": "name", "password": "pass" }
-----
-
-=== `POST /api/login`
-
-Logs in a user and starts a session.
-
-[source,json]
-----
-{ "username": "name", "password": "pass" }
-----
-
-=== `POST /api/logout`
-
-Destroys the current user session.
-
-=== `GET /api/user`
-
-Returns information about the currently authenticated user.
-
-=== `DELETE /api/user`
-
-Deletes the currently authenticated user and all their scores.
-
-NOTE: This endpoint is now protected and only deletes the logged-in user.
-
-=== `POST /api/score`
-
-Submits a new score (requires authentication).
-
-[source,json]
-----
-{ "value": 100 }
-----
-
-=== `GET /api/highscores`
-
-Returns the top 10 scores globally.
-
-=== `GET /api/my-scores`
-
-Returns the top 10 scores of the authenticated user.
-
-=== `GET /api/my-history`
-
-Returns the full score history of the authenticated user.
-
-=== `GET /health`
-
-Simple health check.
-
-[source,json]
-----
-{ "status": "ok" }
-----
+|POST   |/api/register     |Create a new user account
+|POST   |/api/login        |Authenticate a user
+|POST   |/api/logout       |Destroy session
+|GET    |/api/user         |Current logged-in user info
+|DELETE |/api/user         |Delete the current user
+|POST   |/api/score        |Submit a new score
+|GET    |/api/highscores   |Global top 10 scores
+|GET    |/api/my-scores    |User's top 10 scores
+|GET    |/api/my-history   |Full personal score history
+|GET    |/health           |Health check
+|===
 
 == Error Handling
 
@@ -180,7 +123,8 @@ server/
 │   ├── score.js                  → Routes for submitting and retrieving scores
 │   └── user.js                   → Routes for user info and deletion
 ├── utils/
-│   └── asyncHandler.js           → Wrapper for async route handlers
+│   ├── asyncHandler.js           → Wrapper for async route handlers
+│   └── errorMessages.js          → Centralized error messages
 ├── .env                          → Environment variables (not committed)
 ├── index.js                      → Application entry point
 └── README.adoc                   → Backend documentation (AsciiDoc)

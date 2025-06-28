@@ -1,0 +1,105 @@
+= Kniffel Web-App
+:toc:
+:icons: font
+
+Kniffel is a web-based version of the classic dice game, implemented with a React frontend and a Node.js/Express backend.
+Users can register, log in, play the game, and track their scores.
+
+== 🚀 Getting Started
+
+=== Prerequisites
+
+* Node.js v18 or higher
+* PostgreSQL or SQLite (SQLite is default for local dev)
+* npm (comes with Node.js)
+
+=== Setup Instructions
+
+. Clone the repository and navigate to the project:
++
+[source,bash]
+----
+git clone <repo-url>
+cd wvss_kniffel
+----
+. Setup the backend server:
++
+[source,bash]
+----
+cd server
+npm install
+----
+. Create a `.env` file in the `server/` directory with the following content:
++
+[source,env]
+----
+PORT=3001
+SESSION_SECRET=supersecret
+FRONTEND_ORIGIN=http://localhost:5173
+----
+. Setup the database:
++
+[source,bash]
+----
+npx prisma migrate dev --name init
+----
+. Start the backend server:
++
+[source,bash]
+----
+node index.js
+----
+. Start the frontend dev server:
++
+[source,bash]
+----
+cd ../client
+npm install
+npm run dev
+----
+
+The app should now be available at `http://localhost:5173`.
+
+== 🧩 Project Structure
+
+[source,text]
+----
+wvss_kniffel/
+├── client/            → React frontend
+├── server/            → Node/Express backend
+├── .gitignore         → Git ignore file
+├── LICENSE            → License file
+├── package.json       → Project metadata and dependencies
+├── package-lock.json  → Dependency lock file
+└── README.adoc        → This file
+----
+
+See xref:client/README.adoc[Kniffel Frontend] and xref:server/README.adoc[Kniffel Backend] for implementation details.
+
+== 🎲 Kniffel Rules & Scoring
+
+* You play with 5 dice.
+* Each turn allows up to 3 rolls.
+* After each roll, you can keep any dice and re-roll the others.
+* After rolling, you must select one unused scoring category.
+
+=== Sections
+
+* *Upper Section*: Ones through Sixes (sum of matching dice).
+  ** Bonus: 35 points if total is 63 or higher.
+* *Lower Section*: Combination-based categories.
+
+=== Scoring Categories
+
+[cols="1,2", options="header", width=100%]
+|===
+| Category             | Description / Points
+| Ones – Sixes         | Add all dice showing that number
+| Three of a Kind      | At least 3 same – sum of all dice
+| Four of a Kind       | At least 4 same – sum of all dice
+| Full House           | 3 of one kind + 2 of another – *25 points*
+| Small Straight       | 4 consecutive numbers (e.g. 1-2-3-4) – *30 points*
+| Large Straight       | 5 consecutive numbers (e.g. 2-3-4-5-6) – *40 points*
+| Kniffel              | All 5 dice the same – *50 points*
+| Chance               | Sum of all dice – no restrictions
+|===

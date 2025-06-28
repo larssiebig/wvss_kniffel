@@ -50,5 +50,3 @@ router.post("/logout", (req, res) => {
 });
 
 module.exports = router;
-
-// TODO bcrypt vs scrypt vs argon2/i/d/id?
