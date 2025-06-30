@@ -208,24 +208,35 @@
         <p>
           <small>Entwickelt von: Camille, Lars & Lukas</small>
         </p>
+        <aside class="notes">
+          <strong>Lukas:</strong>
+          <ul>
+            <li>Willkommen zu unserer Präsentation der Kniffel Web-App.</li>
+            <li>Das Team: Camille, Lars und ich, Lukas.</li>
+          </ul>
+        </aside>
       </section>
 
-      <!-- Projektziel -->
+      <!-- Gliederung -->
       <section>
-        <h2>🎯 Projektziel</h2>
-        <ul>
-          <li class="fragment">Kniffel als Web-App spielbar</li>
-          <li class="fragment">Registrierung & Login</li>
-          <li class="fragment">Alle Kniffel-Regeln integriert</li>
-          <li class="fragment">Highscore (Top 10)</li>
-          <li class="fragment">Responsive für alle Geräte</li>
-        </ul>
+        <h2>📋 Gliederung</h2>
+        <ol>
+          <li class="fragment fade-in-then-semi-out">Muss-Kriterien</li>
+          <li class="fragment fade-in-then-semi-out">Technikübersicht</li>
+          <li class="fragment fade-in-then-semi-out">Projektstruktur</li>
+          <li class="fragment fade-in-then-semi-out">Screenshots</li>
+          <li class="fragment fade-in-then-semi-out">Code-Implementierung</li>
+          <li class="fragment fade-in-then-semi-out">Aufgabenverteilung</li>
+          <li class="fragment fade-in-then-semi-out">Herausforderungen & Reflexion</li>
+          <li class="fragment fade-in-then-semi-out">Live Demo</li>
+        </ol>
         <aside class="notes">
-          <strong>Lars:</strong> Unser Ziel war es, das bekannte Würfelspiel Kniffel als moderne Web-App umzusetzen. 
-          Das bedeutet: Das Spiel sollte komplett online spielbar sein, inklusive Registrierung und Login, damit jeder Nutzer seine eigenen Spiele und Highscores verwalten kann. 
-          Wir wollten alle offiziellen Kniffel-Regeln abbilden, also sowohl die obere als auch die untere Hälfte des Spielblocks, inklusive Bonusregel. 
-          Ein weiteres Ziel war eine Highscore-Liste, in der die besten 10 Spieler angezeigt werden. 
-          Und ganz wichtig: Die App sollte auf allen Geräten funktionieren, also auch auf Smartphones und Tablets, damit jeder überall spielen kann.
+          <strong>Lars:</strong>
+          <ul>
+            <li>Hier seht ihr die Gliederung unserer Präsentation.</li>
+            <li>Wir starten mit den Muss-Kriterien, geben einen Überblick über die Technik und die Projektstruktur.</li>
+            <li>Danach zeigen wir Screenshots, gehen auf die Code-Implementierung ein, verteilen die Aufgaben, sprechen über Herausforderungen und zeigen eine Live-Demo.</li>
+          </ul>
         </aside>
       </section>
 
@@ -250,42 +261,6 @@
             <li>Und schließlich kann jeder Nutzer seine eigene Spielhistorie einsehen, also alle bisherigen Spiele und deren Ergebnisse.</li>
           </ol>
         </aside>
-      </section>
-
-      <!-- Kniffel-Regeln -->
-      <section>
-        <section>
-          <h2>🎲 Kniffel-Regeln</h2>
-          <ul>
-            <li class="fragment">5 Würfel, bis zu 3 Würfe pro Runde</li>
-            <li class="fragment">Nach jedem Wurf beliebige Würfel halten</li>
-            <li class="fragment">Am Ende jeder Runde: Kategorie wählen und Punkte eintragen</li>
-            <li class="fragment">Obere Hälfte: Einser–Sechser, Bonus ab 63 Punkten (+35)</li>
-          </ul>
-          <aside class="notes">
-            <strong>Camille:</strong> Für alle, die Kniffel nicht kennen: 
-            Man spielt mit 5 Würfeln. In jeder Runde darf man bis zu 3-mal würfeln. 
-            Nach jedem Wurf kann man beliebige Würfel "halten", also beiseitelegen, und nur die übrigen nochmal würfeln. 
-            Am Ende der Runde muss man sich für eine Kategorie entscheiden und die Punkte dort eintragen. 
-            In der oberen Hälfte gibt es die Kategorien Einser bis Sechser. 
-            Wenn man dort insgesamt mindestens 63 Punkte erreicht, bekommt man einen Bonus von 35 Punkten.
-          </aside>
-        </section>
-
-        <section>
-          <ul>
-            <li>Untere Hälfte: Dreierpasch, Viererpasch, Full House, Kleine/Große Straße, Kniffel, Chance</li>
-            <li class="fragment">Alle Felder belegt = Spielende</li>
-            <li class="fragment">Höchste Punktzahl gewinnt</li>
-          </ul>
-          <aside class="notes">
-            <strong>Lars:</strong> In der unteren Hälfte gibt es weitere Kategorien: 
-            Dreierpasch, Viererpasch, Full House, Kleine und Große Straße, Kniffel und Chance. 
-            Jede Kategorie kann nur einmal belegt werden. 
-            Das Spiel endet, wenn alle Felder ausgefüllt sind.
-            Gewonnen hat, wer am Ende die höchste Punktzahl erreicht hat.
-          </aside>
-        </section>
       </section>
 
       <!-- Technikübersicht -->
@@ -320,12 +295,15 @@
           </div>
         </div>
         <aside class="notes">
-          <strong>Lukas:</strong> Für die Umsetzung haben wir moderne Technologien gewählt. 
-          Im Frontend setzen wir auf React mit Vite für schnelle Entwicklung und Tailwind CSS für das Styling. 
-          Die Spiellogik und die Interaktivität laufen komplett im Browser mit JavaScript ES6+. 
-          Im Backend nutzen wir Node.js mit Express, um eine REST-API bereitzustellen. 
-          Die Authentifizierung läuft über Sessions, damit Nutzer sicher eingeloggt bleiben. 
-          Für die Datenhaltung verwenden wir SQLite als Datenbank und Prisma als ORM, um einfach und sicher auf die Daten zuzugreifen und Migrationen durchzuführen.
+          <strong>Lukas:</strong>
+          <ul>
+            <li>Für die Umsetzung haben wir moderne Technologien gewählt.</li>
+            <li>Im Frontend setzen wir auf React mit Vite für schnelle Entwicklung und Tailwind CSS für das Styling.</li>
+            <li>Die Spiellogik und die Interaktivität laufen komplett im Browser mit JavaScript ES6+.</li>
+            <li>Im Backend nutzen wir Node.js mit Express, um eine REST-API bereitzustellen.</li>
+            <li>Die Authentifizierung läuft über Sessions, damit Nutzer sicher eingeloggt bleiben.</li>
+            <li>Für die Datenhaltung verwenden wir SQLite als Datenbank und Prisma als ORM, um einfach und sicher auf die Daten zuzugreifen und Migrationen durchzuführen.</li>
+          </ul>
         </aside>
       </section>
 
@@ -335,10 +313,14 @@
           <h2>📁 Projektstruktur</h2>
           <p>Klare Trennung zwischen Frontend und Backend</p>
           <aside class="notes">
-            <strong>Camille:</strong> Die Projektstruktur ist klar getrennt: 
-            Das Frontend und das Backend sind jeweils in eigenen Ordnern organisiert. 
-            Das erleichtert die Entwicklung, weil jeder Bereich unabhängig weiterentwickelt und getestet werden kann. 
-            Außerdem können wir so das Backend später auch für andere Clients nutzen, zum Beispiel für eine mobile App.
+            <strong>Camille:</strong>
+            <ul>
+              <li>Die Projektstruktur ist klar getrennt:</li>
+              <li>Das Frontend und das Backend sind jeweils in eigenen Ordnern organisiert.</li>
+              <li>Das erleichtert die Entwicklung, weil jeder Bereich unabhängig weiterentwickelt und getestet werden kann.</li>
+              <li>Gerade für das Backend war es wichtig, eine saubere Struktur zu haben, damit die API, die Datenbank und die Authentifizierung übersichtlich und wartbar bleiben.</li>
+              <li>So konnten wir Änderungen schnell umsetzen und Fehler leichter finden.</li>
+            </ul>
           </aside>
         </section>
 
@@ -354,12 +336,15 @@ server/
 └── .env                // Umgebungsvariablen
           </code></pre>
           <aside class="notes">
-            <strong>Lars:</strong> Im Backend gibt es einen zentralen Einstiegspunkt, die index.js. 
-            Die API-Routen sind in einem eigenen Verzeichnis organisiert, zum Beispiel für Authentifizierung und Score. 
-            Die Middleware enthält Funktionen für Authentifizierung und Fehlerbehandlung. 
-            Im prisma-Ordner liegt das Datenbankschema und die Migrationen. 
-            Hilfsfunktionen, zum Beispiel für die Validierung, sind in utils ausgelagert. 
-            Die Umgebungsvariablen wie Datenbankpfad oder Session-Secret stehen in der .env-Datei.
+            <strong>Lars:</strong>
+            <ul>
+              <li>Im Backend gibt es einen zentralen Einstiegspunkt, die index.js.</li>
+              <li>Die API-Routen sind in einem eigenen Verzeichnis organisiert, zum Beispiel für Authentifizierung und Score.</li>
+              <li>Die Middleware enthält Funktionen für Authentifizierung und Fehlerbehandlung.</li>
+              <li>Im prisma-Ordner liegt das Datenbankschema und die Migrationen.</li>
+              <li>Hilfsfunktionen, zum Beispiel für die Validierung, sind in utils ausgelagert.</li>
+              <li>Die Umgebungsvariablen wie Datenbankpfad oder Session-Secret stehen in der .env-Datei.</li>
+            </ul>
           </aside>
         </section>
 
@@ -376,13 +361,16 @@ client/
 └── vite.config.js      // Vite-Konfiguration
             </code></pre>
             <aside class="notes">
-              <strong>Lukas:</strong> Das Frontend ist ebenfalls klar strukturiert. 
-              Im src-Ordner liegen alle React-Komponenten, die einzelnen Seiten und die Hilfsfunktionen. 
-              Die Komponenten sind wiederverwendbare UI-Bausteine, zum Beispiel für die Würfel oder das Scoreboard. 
-              Die Seiten bilden die verschiedenen Ansichten ab, wie das Spiel, die Highscore-Liste oder die Registrierung. 
-              Im public-Ordner liegen statische Dateien wie Bilder. 
-              Die index.html ist das HTML-Template, das von Vite beim Build verwendet wird. 
-              Die Vite-Konfiguration steuert den Entwicklungsserver und das Build-Verhalten.
+              <strong>Lukas:</strong>
+              <ul>
+                <li>Das Frontend ist ebenfalls klar strukturiert.</li>
+                <li>Im src-Ordner liegen alle React-Komponenten, die einzelnen Seiten und die Hilfsfunktionen.</li>
+                <li>Die Komponenten sind wiederverwendbare UI-Bausteine, zum Beispiel für die Würfel oder das Scoreboard.</li>
+                <li>Die Seiten bilden die verschiedenen Ansichten ab, wie das Spiel, die Highscore-Liste oder die Registrierung.</li>
+                <li>Im public-Ordner liegen statische Dateien wie Bilder.</li>
+                <li>Die index.html ist das HTML-Template, das von Vite beim Build verwendet wird.</li>
+                <li>Die Vite-Konfiguration steuert den Entwicklungsserver und das Build-Verhalten.</li>
+              </ul>
             </aside>
         </section>
       </section>
@@ -408,10 +396,13 @@ client/
             </figure>
           </div>
           <aside class="notes">
-            <strong>Lars:</strong> Hier seht ihr die Registrierung und den Login. 
-            Die Formulare sind bewusst einfach gehalten, damit man schnell starten kann. 
-            Nach erfolgreicher Registrierung ist man direkt eingeloggt und kann losspielen.
-            Die Authentifizierung läuft über Sessions, sodass man auch nach einem Neuladen der Seite eingeloggt bleibt.
+            <strong>Lars:</strong>
+            <ul>
+              <li>Hier seht ihr die Registrierung und den Login.</li>
+              <li>Die Formulare sind bewusst einfach gehalten, damit man schnell starten kann.</li>
+              <li>Nach erfolgreicher Registrierung ist man direkt eingeloggt und kann losspielen.</li>
+              <li>Die Authentifizierung läuft über Sessions, sodass man auch nach einem Neuladen der Seite eingeloggt bleibt.</li>
+            </ul>
           </aside>
         </section>
 
@@ -423,10 +414,13 @@ client/
             </figure>
           </div>
           <aside class="notes">
-            <strong>Lukas:</strong> Das ist die Hauptspieloberfläche. 
-            Oben sieht man die aktuellen Würfel, darunter die Buttons zum Würfeln und Halten. 
-            Die Kategorien und die aktuellen Punkte werden übersichtlich angezeigt. 
-            Die Punkte werden automatisch berechnet und angezeigt, sobald alle Würfel geworfen wurden.
+            <strong>Lukas:</strong>
+            <ul>
+              <li>Das ist die Hauptspieloberfläche.</li>
+              <li>Oben sieht man die aktuellen Würfel, darunter die Buttons zum Würfeln und Halten.</li>
+              <li>Die Kategorien und die aktuellen Punkte werden übersichtlich angezeigt.</li>
+              <li>Die Punkte werden automatisch berechnet und angezeigt, sobald alle Würfel geworfen wurden.</li>
+            </ul>
           </aside>
         </section>
 
@@ -438,9 +432,12 @@ client/
             </figure>
           </div>
           <aside class="notes">
-            <strong>Camille:</strong> Die Highscore-Liste zeigt die besten 10 Spieler mit ihren Punktzahlen. 
-            Nach jedem Spiel wird der Score automatisch gespeichert und die Liste aktualisiert. 
-            So kann man sich mit anderen messen und sieht direkt, wie gut man war.
+            <strong>Camille:</strong>
+            <ul>
+              <li>Die Highscore-Liste zeigt die besten 10 Spieler mit ihren Punktzahlen.</li>
+              <li>Nach jedem Spiel wird der Score automatisch gespeichert und die Liste aktualisiert.</li>
+              <li>So kann man sich mit anderen messen und sieht direkt, wie gut man war.</li>
+            </ul>
           </aside>
         </section>
 
@@ -452,9 +449,12 @@ client/
             </figure>
           </div>
           <aside class="notes">
-            <strong>Lars:</strong> Für Neueinsteiger gibt es eine eigene Seite mit allen Kniffel-Regeln. 
-            Hier sind alle Kategorien und die jeweiligen Punktebedingungen erklärt. 
-            So kann jeder sofort loslegen, auch wenn er das Spiel noch nicht kennt.
+            <strong>Lars:</strong>
+            <ul>
+              <li>Für Neueinsteiger gibt es eine eigene Seite mit allen Kniffel-Regeln.</li>
+              <li>Hier sind alle Kategorien und die jeweiligen Punktebedingungen erklärt.</li>
+              <li>So kann jeder sofort loslegen, auch wenn er das Spiel noch nicht kennt.</li>
+            </ul>
           </aside>
         </section>
       </section>
@@ -463,259 +463,180 @@ client/
       <section>
         <section>
           <h2>💻 Code-Implementierung</h2>
-          <p>Detaillierter Blick auf die technische Umsetzung</p>
+          <p>Wichtigste Funktionen im Frontend & Backend – mit Codebeispielen</p>
           <aside class="notes">
-            <strong>Lukas:</strong> Jetzt schauen wir uns an, wie wir die wichtigsten Funktionen technisch umgesetzt haben. 
-            Wir zeigen euch die zentrale Punkteberechnung, das State Management im Frontend und die Erkennung von Straßen.
-          </aside>
-        </section>
-
-        <section>
-          <h3>Punkteberechnung</h3>
-          <pre><code class="language-js" data-trim>
-export function calculateScore(category, dice) {
-  const counts = [0, 0, 0, 0, 0, 0];
-  dice.forEach((d) => counts[d - 1]++);
-  
-  switch (category) {
-    // case Ones - Fives
-    case "Sixes": {
-      const num = categories.indexOf(category) + 1;
-      return dice.filter((d) => d === num).reduce((a, b) => a + b, 0);
-    }
-    case "Three of a Kind":
-      return counts.some((c) => c >= 3) ? sum(dice) : 0;
-    // case Four of a Kind
-    case "Full House":
-      return counts.includes(3) && counts.includes(2) ? 25 : 0;
-    case "Small Straight":
-      return hasStraight(counts, 4) ? 30 : 0;
-    // case Large Straight
-    case "Kniffel":
-      return counts.includes(5) ? 50 : 0;
-    case "Chance":
-      return sum(dice);
-    default:
-      return 0;
-  }
-}
-          </code></pre>
-          <aside class="notes">
-            <strong>Camille:</strong> Das ist die zentrale Funktion zur Punkteberechnung. Sie bekommt die gewählte Kategorie und die aktuellen Würfel als Parameter. Zuerst wird gezählt, wie oft jede Augenzahl vorkommt. Dann prüft ein Switch-Statement für jede Kategorie die passenden Bedingungen:
+            <strong>Lukas:</strong>
             <ul>
-              <li>Für Einser bis Sechser wird die jeweilige Augenzahl aufsummiert.</li>
-              <li>Bei "Three of a Kind" und "Four of a Kind" wird geprüft, ob mindestens drei bzw. vier gleiche Würfel vorhanden sind. Ist das der Fall, wird die Summe aller Würfel zurückgegeben.</li>
-              <li>Für "Full House" muss es genau drei gleiche und zwei gleiche Würfel geben, dann gibt es 25 Punkte.</li>
-              <li>Bei "Small Straight" und "Large Straight" wird mit der Hilfsfunktion <code>hasStraight</code> geprüft, ob vier bzw. fünf aufeinanderfolgende Zahlen vorkommen. Dafür wird die Häufigkeit der Augenzahlen in einen Binärstring umgewandelt und mit bekannten Mustern verglichen.</li>
-              <li>Für "Kniffel" müssen alle fünf Würfel gleich sein, dann gibt es 50 Punkte.</li>
-              <li>Bei "Chance" wird einfach die Summe aller Würfel berechnet.</li>
+              <li>Wir zeigen euch jetzt die wichtigsten technischen Lösungen – getrennt nach Frontend und Backend.</li>
+              <li>Zu jedem Thema gibt es ein konkretes Codebeispiel und eine kurze Erklärung.</li>
             </ul>
-            <p>
-              Die Funktion ist so aufgebaut, dass sie leicht um weitere Kategorien erweitert werden kann. 
-              Außerdem sorgt sie dafür, dass keine ungültigen Punkte vergeben werden.
-            </p>
           </aside>
         </section>
 
+        <!-- Frontend: State Management & Würfeln -->
         <section>
-          <h3>React State Management</h3>
+          <h3>Frontend: State Management & Würfeln</h3>
           <pre><code class="language-js" data-trim>
 const [dice, setDice] = useState(Array(5).fill(null));
 const [kept, setKept] = useState(Array(5).fill(false));
 const [rollsLeft, setRollsLeft] = useState(3);
-const [scores, setScores] = useState(
-  Object.fromEntries(categories.map((c) => [c, null]))
-);
+
+function rollDie() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+function rollDice() {
+  if (rollsLeft === 0) return;
+  setDice(dice.map((d, i) => (kept[i] && d !== null ? d : rollDie())));
+  setRollsLeft(rollsLeft - 1);
+}
           </code></pre>
           <aside class="notes">
-            <strong>Lars:</strong> Im Frontend verwalten wir den kompletten Spielzustand mit React State. 
-            Wir haben einen State für die aktuellen Würfel, einen für die gehaltenen Würfel, einen für die verbleibenden Würfe und einen für die vergebenen Punkte in den Kategorien.
+            <strong>Lars:</strong>
+            <ul>
+              <li>Wir speichern die Würfel, gehaltene Würfel und die Würfe im State.</li>
+              <li>Mit <code>rollDice</code> werden alle nicht gehaltenen Würfel neu geworfen.</li>
+              <li>Die Anzahl der Würfe wird automatisch reduziert.</li>
+            </ul>
           </aside>
         </section>
 
+        <!-- Frontend: Punkteberechnung -->
         <section>
-          <h3>Straßen-Erkennung</h3>
+          <h3>Frontend: Punkteberechnung</h3>
+          <pre><code class="language-js" data-trim>
+        export function calculateScore(category, dice) {
+          const counts = [0, 0, 0, 0, 0, 0];
+          dice.forEach((d) => counts[d - 1]++);
+          switch (category) {
+            // Punkte für die einzelnen Kategorien
+            case "Sixes": {
+              const num = ["Ones","Twos","Threes","Fours","Fives","Sixes"].indexOf(category) + 1;
+              return dice.filter((d) => d === num).reduce((a, b) => a + b, 0);
+            }
+            case "Three of a Kind":
+              return counts.some((c) => c >= 3) ? sum(dice) : 0;
+            // case "Four of a Kind" wie "Three of a Kind", aber mit 4 Würfeln
+            case "Full House":
+              return counts.includes(3) && counts.includes(2) ? 25 : 0;
+            case "Small Straight":
+              return hasStraight(counts, 4) ? 30 : 0;
+            // case "Large Straight" wie "Small Straight", aber mit 5 Würfeln
+            case "Kniffel":
+              return counts.includes(5) ? 50 : 0;
+            case "Chance":
+              return sum(dice);
+            default:
+              return 0;
+          }
+        }
+          </code></pre>
+          <aside class="notes">
+            <strong>Lars:</strong>
+            <ul>
+              <li>Die Funktion <code>calculateScore</code> berechnet die Punkte für jede Kniffel-Kategorie.</li>
+              <li>Für jede Kategorie gibt es eine eigene Regel, z.B. zählt bei "Three of a Kind" die Summe aller Würfel, wenn mindestens drei gleich sind.</li>
+              <li>Auch Spezialfälle wie Full House, Kniffel oder Chance werden hier abgedeckt.</li>
+              <li>Die Funktion <code>sum</code> hilft dabei, die Augensumme zu berechnen.</li>
+              <li>So wird sichergestellt, dass die Punktevergabe immer korrekt und automatisch erfolgt.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <!-- Frontend: Straßen-Erkennung -->
+        <section>
+          <h3>Frontend: Straßen-Erkennung</h3>
           <pre><code class="language-js" data-trim>
 export function hasStraight(counts, length) {
   const binary = counts.map((c) => (c > 0 ? 1 : 0)).join("");
-  const patterns = {
-    4: ["1111", "01111", "11110"], // Possible positions for small straight
-    5: ["11111"],                  // Only one position for large straight
-  };
+  const patterns = { 4: ["1111", "01111", "11110"], 5: ["11111"] };
   return patterns[length].some((p) => binary.includes(p));
-}          
+}
           </code></pre>
-          <p><small>Mustererkennung über Binär-String</small></p>
           <aside class="notes">
-            <strong>Lukas:</strong> Die Erkennung von kleinen und großen Straßen ist eine der kniffligsten Aufgaben. 
-            Wir wandeln die Häufigkeit der Augenzahlen in einen Binärstring um, zum Beispiel "11111" für fünf verschiedene Zahlen. 
-            Dann vergleichen wir diesen String mit bekannten Mustern für kleine und große Straßen. 
-            Für die kleine Straße suchen wir nach vier aufeinanderfolgenden Einsen, für die große Straße nach fünf. 
-            Das ist sehr effizient und funktioniert unabhängig davon, wie die Würfel verteilt sind. 
-            So können wir sicherstellen, dass alle gültigen Straßen erkannt werden, auch wenn die Reihenfolge der Würfel unterschiedlich ist.
-          </aside>
-        </section>
-      </section>
-
-      <!-- Frontend Features -->
-      <section>
-        <section>
-          <h2>⚛ Frontend Features</h2>
-          <p>React-basierte Benutzeroberfläche</p>
-          <aside class="notes">
-            <strong>Camille:</strong> Im Frontend haben wir viele Features umgesetzt, die das Spiel besonders benutzerfreundlich machen.
+            <strong>Lars:</strong>
+            <ul>
+              <li>Die Funktion <code>hasStraight</code> prüft, ob eine kleine oder große Straße geworfen wurde.</li>
+              <li>Dazu wird gezählt, welche Augenzahlen mindestens einmal vorkommen und als Binärstring dargestellt.</li>
+              <li>Mit Pattern-Matching wird dann erkannt, ob die passenden Zahlenfolgen für eine Straße vorhanden sind.</li>
+              <li>Das ist effizient und verhindert Fehler bei der Straßenerkennung.</li>
+              <li>So werden kleine und große Straßen im Spiel automatisch erkannt und korrekt gewertet.</li>
+            </ul>
           </aside>
         </section>
 
+        <!-- Frontend: Live Score Vorschau & Automatisches Speichern -->
         <section>
-          <h3>Game State Management</h3>
+          <h3>Frontend: Live Score Vorschau & Automatisches Speichern</h3>
           <pre><code class="language-js" data-trim>
+const previewScore = !isChosen && allRolled ? calculateScore(cat, dice) : null;
+
 useEffect(() => {
   if (!isGameComplete) return;
-  
-  const upperSum = upperSectionSum(scores);
-  const bonus = hasBonus(scores) ? 35 : 0;
-  const totalScore = Object.values(scores)
-    .reduce((sum, val) => sum + (val ?? 0), 0) + bonus;
-  
-  if (user) {
-    axios.post("http://localhost:3001/api/score", 
-      { value: totalScore }, 
-      { withCredentials: true }
-    ).then(() => {
-      setSuccessMessage(
-        `Game is complete! Your score of ${totalScore} has been saved.`
-      );
-    })
-    .catch((error) => {
-      const message =
-        error.response?.data?.error || "Error saving your score";
-      setErrorMessage(message);
-      setTimeout(() => setErrorMessage(null), 3000);
-    });
-  }
+  const totalScore = ...;
+  axios.post("/api/score", { value: totalScore }, { withCredentials: true });
 }, [isGameComplete, scores, user]);
           </code></pre>
           <aside class="notes">
-            <strong>Lars:</strong> Am Ende eines Spiels wird der Score automatisch berechnet und an das Backend gesendet. 
-            Das passiert mit einem <code>useEffect</code>-Hook, der auf das Spielende und die vergebenen Punkte reagiert. 
-            Sobald alle Kategorien belegt sind, wird die Gesamtsumme inklusive Bonus berechnet. 
-            Dann wird ein POST-Request an das Backend geschickt, um den Score zu speichern. 
-            Das passiert alles im Hintergrund, der Nutzer muss sich um nichts kümmern. 
-            Nach erfolgreichem Speichern wird eine Erfolgsmeldung angezeigt.
+            <strong>Lars:</strong>
+            <ul>
+              <li>Die Live Score Vorschau zeigt direkt die möglichen Punkte an.</li>
+              <li>Nach Spielende wird der Score automatisch an das Backend gesendet.</li>
+              <li>Das passiert per API-Call mit Axios.</li>
+            </ul>
           </aside>
         </section>
 
+        <!-- Backend: Session-Authentifizierung & Registrierung -->
         <section>
-          <h3>Interaktives Würfeln</h3>
+          <h3>Backend: Session-Authentifizierung & Registrierung</h3>
           <pre><code class="language-js" data-trim>
-const toggleKeep = (index) => {
-  const newKept = [...kept];
-  newKept[index] = !newKept[index];
-  setKept(newKept);
-};
-
-const rollDice = () => {
-  if (rollsLeft === 0) return;
-  const newDice = dice.map((d, i) => 
-    (kept[i] && d !== null ? d : rollDie())
-  );
-  setDice(newDice);
-  setRollsLeft(rollsLeft - 1);
-};
-          </code></pre>
-          <aside class="notes">
-            <strong>Lukas:</strong> Die Würfel können per Klick gehalten oder wieder freigegeben werden. 
-            Das wird über die Funktion <code>toggleKeep</code> gesteuert. 
-            Beim Würfeln bleiben die gehaltenen Würfel erhalten, die anderen werden neu geworfen. 
-            Das ist genau wie beim echten Kniffel und sorgt für ein authentisches Spielgefühl. 
-            Die Logik ist so aufgebaut, dass keine unzulässigen Aktionen möglich sind, zum Beispiel kann man nicht mehr würfeln, wenn die drei Würfe aufgebraucht sind.
-          </aside>
-        </section>
-
-        <section>
-          <h3>Live Score Vorschau</h3>
-          <pre><code class="language-js" data-trim>
-&lt;div&gt;
-  &#123;categories.map((cat) =&gt; &#123;
-    const isChosen = scores[cat] !== null;
-    const allRolled = dice.every((d) =&gt; d !== null);
-    const previewScore = !isChosen &amp;&amp; allRolled 
-      ? calculateScore(cat, dice) : null;
-    
-    return (
-      &lt;button
-        key=&#123;cat&#125;
-        disabled=&#123;isChosen || !allRolled&#125;
-        onClick=&#123;() =&gt; scoreCategory(cat)&#125;
-      &gt;
-        &#123;cat&#125;: &#123;isChosen ? scores[cat] : previewScore ?? "-"&#125;
-      &lt;/button&gt;
-    );
-  &#125;)&#125;
-&lt;/div&gt;
-          </code></pre>
-          <aside class="notes">
-            <strong>Camille:</strong> 
-            Während des Spiels sieht man immer eine Vorschau, wie viele Punkte man in jeder Kategorie bekommen würde, wenn man sie jetzt auswählt. 
-            Das wird dynamisch berechnet, sobald alle Würfel geworfen wurden. 
-            Die Kategorien, die schon vergeben sind, sind deaktiviert. 
-            Das macht die Bedienung sehr komfortabel und hilft, die beste Entscheidung zu treffen.
-          </aside>
-        </section>
-      </section>
-
-      <!-- Backend API -->
-      <section>
-        <section>
-          <h2>🔌 Backend API</h2>
-          <p>Express.js Server mit SQLite & Prisma</p>
-          <aside class="notes">
-            <strong>Lars:</strong> Das Backend basiert auf Express.js und speichert die Daten in einer SQLite-Datenbank. 
-            Die Kommunikation läuft über eine REST-API.
-          </aside>
-        </section>
-
-        <section>
-          <h2>Session-basierte Authentifizierung</h2>
-          <pre><code class="language-js" data-trim>
-// server/routes/auth.js
-router.post("/login", asyncHandler(async (req, res) => {
+router.post("/register", asyncHandler(async (req, res) => {
   const { username, password } = req.body;
-  const user = await prisma.user.findUnique({ where: { username } });
-  
-  if (user && await bcrypt.compare(password, user.password)) {
-    req.session.userId = user.id;
-    req.session.save(error => {
-      if(error) return res.status(500).json({ error: ERROR_MESSAGES.INTERNAL });
-      res.json({ success: true, user: { id: user.id, username: user.username } });
-    });
-  } else {
-    res.status(401).json({ error: ERROR_MESSAGES.INVALID_CREDENTIALS });
-  }
+  const hash = await bcrypt.hash(password, 10);
+  const user = await prisma.user.create({ data: { username, password: hash } });
+  req.session.userId = user.id;
+  res.json({ success: true });
 }));
           </code></pre>
           <aside class="notes">
-            <strong>Lukas:</strong> Die Authentifizierung läuft über Sessions. 
-            Beim Login wird geprüft, ob der Nutzername existiert und das Passwort korrekt ist. 
-            Wenn ja, wird die User-ID in der Session gespeichert. 
-            Dadurch bleibt der Nutzer auch nach einem Neuladen der Seite eingeloggt. 
-            Fehler wie falsches Passwort oder nicht existierender Nutzer werden mit passenden Fehlermeldungen beantwortet. 
-            Die Sessions werden serverseitig gespeichert, was für zusätzliche Sicherheit sorgt.
+            <strong>Camille:</strong>
+            <ul>
+              <li>Bei der Registrierung wird das Passwort sicher gehasht, damit es nicht im Klartext in der Datenbank landet.</li>
+              <li>Der User wird in der Datenbank gespeichert, und wir prüfen, ob der Benutzername schon vergeben ist.</li>
+              <li>Nach erfolgreicher Registrierung wird die Session gesetzt, damit der Nutzer direkt eingeloggt ist und keine erneute Anmeldung nötig ist.</li>
+              <li>Das sorgt für eine sichere und komfortable Nutzererfahrung.</li>
+              <li>Die gleiche Logik nutzen wir auch beim Login, um die Authentifizierung zu prüfen.</li>
+            </ul>
           </aside>
         </section>
 
+        <!-- Backend: Score speichern -->
         <section>
-          <h3>Score speichern</h3>
+          <h3>Backend: Score speichern</h3>
           <pre><code class="language-js" data-trim>
-// Submit a new score for the logged-in user.
 router.post("/score", isAuthenticated, asyncHandler(async (req, res) => {
   const { value } = req.body;
   await prisma.score.create({ data: { value, userId: req.session.userId } });
   res.json({ success: true });
 }));
+          </code></pre>
+          <aside class="notes">
+            <strong>Camille:</strong>
+            <ul>
+              <li>Nach Spielende wird der Score per POST-Request gespeichert.</li>
+              <li>Die User-ID kommt aus der Session, so ist der Score eindeutig dem eingeloggten Nutzer zugeordnet.</li>
+              <li>Wir speichern nicht nur den Score, sondern auch das Datum, damit wir später die Historie und Statistiken berechnen können.</li>
+              <li>Die Antwort ist ein einfacher Erfolgsstatus, damit das Frontend weiß, dass alles geklappt hat.</li>
+              <li>Fehler werden zentral abgefangen und als JSON zurückgegeben, damit der Client sie anzeigen kann.</li>
+            </ul>
+          </aside>
+        </section>
 
-// Get top 10 highscores across all users.
+        <!-- Backend: Highscores abrufen -->
+        <section>
+          <h3>Backend: Highscores abrufen</h3>
+          <pre><code class="language-js" data-trim>
 router.get("/highscores", asyncHandler(async (req, res) => {
   const scores = await prisma.score.findMany({
     orderBy: { value: "desc" },
@@ -726,40 +647,47 @@ router.get("/highscores", asyncHandler(async (req, res) => {
 }));
           </code></pre>
           <aside class="notes">
-            <strong>Camille:</strong> Nach jedem Spiel wird der Score automatisch an das Backend gesendet. 
-            Der Endpunkt <code>/score</code> speichert den Score zusammen mit der User-ID in der Datenbank. 
-            Über <code>/highscores</code> können die Top 10 Scores abgerufen werden, inklusive Nutzernamen. 
-            Die Highscore-Liste wird nach jedem neuen Score aktualisiert. 
-            Außerdem gibt es einen Endpunkt, um die eigene Spielhistorie abzurufen, sodass jeder Nutzer seine bisherigen Spiele sehen kann.
+            <strong>Camille:</strong>
+            <ul>
+              <li>Die Highscore-Liste liefert die besten 10 Scores mit Usernamen.</li>
+              <li>Sortierung erfolgt absteigend nach Score, damit immer die höchsten Ergebnisse oben stehen.</li>
+              <li>Wir nutzen ein Join mit der User-Tabelle, um die Namen der Spieler anzuzeigen.</li>
+              <li>Das Ergebnis wird als JSON zurückgegeben und im Frontend angezeigt.</li>
+              <li>So können sich die Nutzer direkt mit anderen vergleichen und sehen, wie sie im Ranking stehen.</li>
+            </ul>
           </aside>
         </section>
 
+        <!-- Backend: Eigene Historie & Statistiken -->
         <section>
-          <h3>Prisma Schema</h3>
+          <h3>Backend: Eigene Historie & Statistiken</h3>
           <pre><code class="language-js" data-trim>
-model User {
-  id       Int     @id @default(autoincrement())
-  username String  @unique
-  password String
-  scores   Score[]
-}
+router.get("/my-history", isAuthenticated, asyncHandler(async (req, res) => {
+  const history = await prisma.score.findMany({
+    where: { userId: req.session.userId },
+    orderBy: { date: "desc" },
+  });
+  res.json(history);
+}));
 
-model Score {
-  id     Int      @id @default(autoincrement())
-  value  Int
-  date   DateTime @default(now())
-  user   User     @relation(fields: [userId], references: [id])
-  userId Int
-}
+router.get("/my-stats", isAuthenticated, asyncHandler(async (req, res) => {
+  const scores = await prisma.score.findMany({ where: { userId: req.session.userId } });
+  const avgScore = scores.length
+    ? Math.round(scores.reduce((sum, score) => sum + score.value, 0) / scores.length)
+    : 0;
+  res.json({ gamesPlayed: scores.length, avgScore });
+}));
           </code></pre>
           <aside class="notes">
-            <strong>Lars:</strong> Das Prisma-Schema definiert die Datenbankstruktur. 
-            Es gibt ein User-Modell mit eindeutiger ID, Nutzernamen und Passwort. 
-            Jeder User kann mehrere Scores haben, die im Score-Modell gespeichert werden. 
-            Jeder Score hat eine Punktzahl, ein Datum und eine Referenz auf den User. 
-            Das macht es einfach, die Highscore-Liste und die eigene Spielhistorie zu verwalten. 
-            Prisma sorgt dafür, dass die Datenbank immer konsistent bleibt und Migrationen einfach durchgeführt werden können.
-          </aside>         
+            <strong>Camille:</strong>
+            <ul>
+              <li>Die API liefert die eigene Spielhistorie und Statistiken wie Durchschnitt und Anzahl der Spiele.</li>
+              <li>Wir filtern die Scores nach der User-ID aus der Session, damit jeder nur seine eigenen Daten sieht.</li>
+              <li>Die Daten werden direkt aus der Datenbank berechnet und als JSON zurückgegeben.</li>
+              <li>Das Frontend kann daraus eine Übersicht und Auswertungen anzeigen, zum Beispiel den persönlichen Fortschritt.</li>
+              <li>So bekommt jeder Nutzer einen guten Überblick über seine bisherigen Spiele und Erfolge.</li>
+            </ul>
+          </aside>
         </section>
       </section>
 
@@ -796,12 +724,57 @@ model Score {
           </div>
         </div>
         <aside class="notes">
-          <strong>Lukas:</strong> Die Aufgaben waren klar verteilt: 
-          Camille hat das Backend entwickelt, das Datenbankmodell entworfen und die API-Endpunkte gebaut. 
-          Lars war für das Frontend, die Spiellogik und das UI/UX-Design zuständig. 
-          Ich habe mich um Testing, Styling, Dokumentation und das Deployment gekümmert. 
-          Durch diese klare Aufteilung konnten wir effizient arbeiten und uns gegenseitig unterstützen.
+          <strong>Lukas:</strong>
+          <ul>
+            <li>Die Aufgaben waren klar verteilt:</li>
+            <li>Camille hat das Backend entwickelt, das Datenbankmodell entworfen und die API-Endpunkte gebaut.</li>
+            <li>Lars war für das Frontend, die Spiellogik und das UI/UX-Design zuständig.</li>
+            <li>Ich habe mich um Testing, Styling, Dokumentation und das Deployment gekümmert.</li>
+            <li>Durch diese klare Aufteilung konnten wir effizient arbeiten und uns gegenseitig unterstützen.</li>
+          </ul>
         </aside>
+      </section>
+
+      <!-- Herausforderungen & Reflexion -->
+      <section>
+        <section>
+          <h2>⚠ Herausforderungen & Reflexion</h2>
+          <ul>
+            <li class="fragment">Straßen-Erkennung (Binär-Pattern-Matching)</li>
+            <li class="fragment">Komplexes State Management im Frontend</li>
+            <li class="fragment">Session-Handling & sichere Authentifizierung</li>
+            <li class="fragment">Score-User-Verknüpfung in der Datenbank</li>
+          </ul>
+          <aside class="notes">
+            <strong>Lars:</strong>
+            <ul>
+              <li>Wir hatten einige technische Herausforderungen, z.B. die algorithmische Erkennung von kleinen und großen Straßen.</li>
+              <li>Das State Management im Frontend war anspruchsvoll, weil viele Zustände (Würfel, Kategorien, Scores) synchronisiert werden mussten.</li>
+              <li>Im Backend war das sichere Session-Handling und die Authentifizierung wichtig.</li>
+              <li>Außerdem mussten Scores eindeutig dem richtigen User zugeordnet werden.</li>
+            </ul>
+          </aside>
+        </section>
+        <section>
+          <h3>Unsere Lösungen & Learnings</h3>
+          <ul>
+            <li class="fragment">Effiziente Algorithmen & klare Struktur</li>
+            <li class="fragment">Automatisches Speichern & Live-Vorschau</li>
+            <li class="fragment">Middleware & zentrale Fehlerbehandlung</li>
+            <li class="fragment">Gute Teamarbeit, alle Kernfunktionen umgesetzt</li>
+            <li class="fragment">Moderne Technologien & saubere Entwicklung</li>
+          </ul>
+          <aside class="notes">
+            <strong>Camille:</strong>
+            <ul>
+              <li>Wir haben effiziente Algorithmen wie das Binär-Pattern-Matching für Straßen genutzt.</li>
+              <li>Das automatische Speichern und die Live-Vorschau im Frontend verbessern die Nutzererfahrung.</li>
+              <li>Im Backend sorgen Middleware und zentrale Fehlerbehandlung für Sicherheit und Wartbarkeit.</li>
+              <li>Durch gute Teamarbeit konnten wir alle Kernfunktionen erfolgreich umsetzen.</li>
+              <li>Die Wahl moderner Technologien hat uns eine saubere und strukturierte Entwicklung ermöglicht.</li>
+            </ul>
+          </aside>
+        </section>
       </section>
 
       <!-- Live Demo -->
@@ -816,98 +789,16 @@ model Score {
           <li class="fragment">Eigene Spielhistorie ansehen</li>
         </ol>
         <aside class="notes">
-          <strong>Camille:</strong> Jetzt zeigen wir die App live. 
-          Wir registrieren einen neuen Nutzer, spielen eine Runde Kniffel, speichern den Score und schauen uns die Highscore-Liste und die eigene Spielhistorie an. 
-          So seht ihr alle wichtigen Funktionen in Aktion.
-        </aside>
-      </section>
-
-      <!-- Herausforderungen & Lösungen -->
-      <section>
-        <h2>⚠ Herausforderungen</h2>
-        <ul>
-          <li class="fragment">Komplexe Muster-Erkennung für Straßen</li>
-          <li class="fragment">State Management zwischen Würfeln, Kategorien und Scores</li>
-          <li class="fragment">Session Handling & CORS</li>
-          <li class="fragment">Würfel-Holding zwischen Würfen</li>
-          <li class="fragment">User-Score Verknüpfung mit Prisma</li>
-        </ul>
-        <aside class="notes">
-          <strong>Lars:</strong> Es gab einige Herausforderungen: 
-          Die Erkennung von kleinen und großen Straßen war algorithmisch anspruchsvoll. 
-          Das State Management im Frontend musste sauber zwischen Würfeln, Kategorien und Scores unterscheiden. 
-          Die Sessions und das CORS-Handling im Backend mussten sicher und zuverlässig funktionieren. 
-          Das Halten der Würfel zwischen den Würfen musste intuitiv und fehlerfrei laufen. 
-          Und schließlich mussten wir sicherstellen, dass jeder Score eindeutig dem richtigen Nutzer zugeordnet wird.
-        </aside>
-      </section>
-
-      <section>
-        <h2>💡 Lösungsansätze</h2>
-        <ul>
-          <li class="fragment">Binär-Pattern Matching für Straßen</li>
-          <li class="fragment">React useEffect für Score-Speichern</li>
-          <li class="fragment">AsyncHandler für Error-Handling</li>
-          <li class="fragment">Middleware-Chain für Auth</li>
-          <li class="fragment">Preview-Scores für bessere UX</li>
-        </ul>
-        <aside class="notes">
-          <strong>Lukas:</strong> Unsere Lösungen: 
-          Für die Straßen-Erkennung haben wir Binär-Pattern-Matching verwendet, was sehr effizient ist. 
-          Das automatische Speichern des Scores am Spielende läuft über einen React useEffect-Hook. 
-          Für das Error-Handling im Backend nutzen wir einen AsyncHandler, der Fehler zentral abfängt. 
-          Die Authentifizierung ist als Middleware-Kette umgesetzt, sodass alle geschützten Endpunkte sicher sind. 
-          Und die Live-Vorschau der Punkte sorgt für eine bessere User Experience.
-        </aside>
-      </section>
-
-      <!-- Reflexion -->
-      <section>
-        <section>
-          <h2>🤔 Reflexion</h2>
-          <aside class="notes">
-            <strong>Camille:</strong> Zum Abschluss reflektieren wir, was im Projekt besonders gut lief. 
-          </aside>
-        </section>
-        
-        <section>
-          <h3>✅ Was lief gut?</h3>
+          <strong>Camille:</strong>
           <ul>
-            <li class="fragment">Klare Aufgabenverteilung im Team</li>
-            <li class="fragment">Moderne Tech-Stack Wahl</li>
-            <li class="fragment">Strukturierte Entwicklung</li>
-            <li class="fragment">Alle Pflichtfunktionen implementiert</li>
-            <li class="fragment">Responsive Design erreicht</li>
+            <li>Jetzt zeigen wir die App live.</li>
+            <li>Wir registrieren einen neuen Nutzer, spielen eine Runde Kniffel, speichern den Score und schauen uns die Highscore-Liste und die eigene Spielhistorie an.</li>
+            <li>So seht ihr alle wichtigen Funktionen in Aktion.</li>
           </ul>
-          <aside class="notes">
-            <strong>Lars:</strong> Besonders gut war die klare Aufgabenverteilung im Team. 
-            Jeder wusste, was zu tun ist, und wir konnten uns gegenseitig unterstützen. 
-            Die Wahl des Tech-Stacks hat sich bewährt, weil wir schnell und flexibel entwickeln konnten. 
-            Die Entwicklung war sehr strukturiert, mit regelmäßigen Abstimmungen und Code-Reviews. 
-            Wir haben alle Pflichtfunktionen wie geplant umgesetzt und das responsive Design sorgt dafür, dass die App überall gut aussieht.
-          </aside>
-        </section>
-      </section>
-
-      <!-- Erweiterungen -->
-      <section>
-        <h3>🚀 Mögliche Erweiterungen</h3>
-        <ul>
-          <li class="fragment">Multiplayer-Funktionalität</li>
-          <li class="fragment">Erweiterte Statistiken</li>
-          <li class="fragment">Mobile App</li>
-          <li class="fragment">Verschiedene Spielvarianten</li>
-          <li class="fragment">Social Features</li>
-        </ul>
-        <aside class="notes">
-          <strong>Lukas:</strong> Für die Zukunft gibt es viele Möglichkeiten zur Erweiterung. 
-          Wir könnten eine Multiplayer-Funktion einbauen, damit mehrere Nutzer gleichzeitig spielen können. 
-          Erweiterte Statistiken wären spannend, zum Beispiel Durchschnittsscore oder häufigste Kategorien. 
-          Eine mobile App wäre ein nächster Schritt, um noch mehr Nutzer zu erreichen. 
-          Außerdem könnten wir verschiedene Spielvarianten oder Social Features wie Freundeslisten und Challenges ergänzen.
         </aside>
       </section>
 
+      <!-- Ende -->
       <section>
         <h2>🎉 Danke für die Aufmerksamkeit!</h2>
         <p>Fragen?</p>
